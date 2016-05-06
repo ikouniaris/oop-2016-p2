@@ -70,4 +70,24 @@ public class Cities {
         return null;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public Coordinates getCoordinate() {
+        return coordinate;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
 }
