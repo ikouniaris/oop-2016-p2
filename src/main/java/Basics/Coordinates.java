@@ -14,6 +14,18 @@ public class Coordinates {
     //Fields.
     private String type;
     private Double x;
+
+    public String getType() {
+        return type;
+    }
+
+    public Double getX() {
+        return x;
+    }
+
+    public Double getY() {
+        return y;
+    }
     private Double y;
 
     //Constructor.

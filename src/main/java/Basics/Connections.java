@@ -46,7 +46,7 @@ public class Connections {
     public void loadStationsInfo(){
        System.out.println("Retrieving Station information");
         for ( c1=0;c1<cities.size();c1++) {
-            for (c2=0;c2<cities.size();c2++){
+            for (c2=c1+1;c2<cities.size();c2++){
             jsonBreakDown(url1+cities.get(c1)+url2+cities.get(c2)+url3);
             }
            System.out.println("Finished getting "+cities.get(c1)+"'s connections.");
