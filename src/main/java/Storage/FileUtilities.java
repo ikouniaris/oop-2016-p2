@@ -11,30 +11,34 @@ package Storage;
  */
 import Basics.Cities;
 import Basics.Directlink;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList; 
+import java.io.IOException;
 
 public class FileUtilities {
     private  ArrayList<Directlink> Links=new ArrayList<Directlink>();
     private  ArrayList<Cities> citiesList = new ArrayList<Cities>();
     
     public void SaveLinks(String FileName, ArrayList Connections) throws FileNotFoundException {
-          PrintWriter pw = new PrintWriter(new FileOutputStream(FileName));
-          int i=0;
+          PrintWriter pw = new PrintWriter(new FileWriter(FileName, true));
+          
           Links=Connections;
 
         for (Directlink link : Links) {
             
-            pw.println(link.getFromName(i));
-            pw.println(link.getFromID(i));
-            pw.println(link.getToName(i));
-            pw.println(link.getToID(i));
-            i++;
+            pw.println(link.getFromName()+'|'+link.getFromID()+'|'+link.getToName()+'|'+link.getToID());
+     
         }
          pw.close();
-        
-        
+              
     }
+    
+    
+   
+    
+    
+    
+    
 }

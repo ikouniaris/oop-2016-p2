@@ -81,21 +81,6 @@ public class Connections {
              System.out.println(c1+' '+c2);
          }
          
-         
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-                      
-
             //Catching errors and retrying.
         }catch(IOException | ParseException e){
             if(counter==0){
@@ -119,14 +104,6 @@ public class Connections {
         
     }
     
-  /*  
-    public ArrayList getfrom(){
-        return FromLists;
-    }
-    
-    public ArrayList getto(){
-        return ToLists;
-    }
-*/
+  
 }
 
