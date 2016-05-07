@@ -42,7 +42,12 @@ public class JsonCityReader {
             }
         }
         System.out.println("100% complete. \nData downloading complete.\n ");
+        
+        
+        
+        
     }   
+    
     
     //Connects to http://transport.opendata.ch and gets data.
     private void jsonBreakDown(String foo, int i){
