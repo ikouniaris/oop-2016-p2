@@ -39,10 +39,11 @@ public class FileUtilities {
 
         for (Directlink link : Links) {
 
-            pw.println(link.getFromName() + ' ' + link.getFromID() + ' ' + link.getToName() + ' ' + link.getToID());
+            pw.println(link.getFromName() + " " + link.getFromID() + " " + link.getToName() + " " + link.getToID());
 
-            pw.close();
+            
         }
+        pw.close();
     }
     
     public void SaveCities(String FileName, ArrayList Cities, boolean mode) throws FileNotFoundException, IOException {
@@ -52,10 +53,11 @@ public class FileUtilities {
 
         for (Cities City : CitiesList) {
 
-            pw.println(City.getId()+' '+City.getName()+' '+City.getScore()+' '+City.getCoordinate().getX()+' '+City.getCoordinate().getY()+' '+City.getCoordinate().getType()+' '+City.getDistance());
+            pw.println(City.getId()+" "+City.getName()+" "+City.getScore()+" "+City.getCoordinate().getX()+" "+City.getCoordinate().getY()+" "+City.getCoordinate().getType()+" "+City.getDistance());
 
-            pw.close();
+            
         }
+        pw.close();
     }
     
     
@@ -85,11 +87,11 @@ public class FileUtilities {
 	String line = null;
 	while ((line = br.readLine()) != null) {
 		String[] lines=line.split("\\s+");
-                Coordinates tempCoordinates=new Coordinates(lines[6],Double.parseDouble(lines[4]),Double.parseDouble(lines[5]));
-                Cities tempcity=new Cities(lines[0],lines[1],lines[2], tempCoordinates, lines[7]);
-                tempcity.addCity(tempcity);            
+                Coordinates tempCoordinates=new Coordinates(lines[5],Double.parseDouble(lines[3]),Double.parseDouble(lines[4]));
+                Cities tempcity=new Cities(lines[0],lines[1],lines[2], tempCoordinates, lines[6]);
+                tempcity.addCity(tempcity); 
 	}
- 
+ Cities ncity=new Cities();
 	br.close();
 }
     

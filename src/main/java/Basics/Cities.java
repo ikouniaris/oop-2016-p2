@@ -45,11 +45,17 @@ public class Cities {
         }
     }
 
+    public Cities(){
+        
+    }
+    
     //Getters and Setters.
     public void addCity(Cities city) {
         citiesList.add(city);
-        System.out.println(city.getCoordinate().getX()+" "+city.getCoordinate().getY());
+        
     }
+    
+ 
 
     public ArrayList getCityList() {
         return citiesList;
