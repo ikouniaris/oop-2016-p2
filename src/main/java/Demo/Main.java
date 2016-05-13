@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 
-package Basics;
+package Demo;
+import Basics.Cities;
+import Basics.Directlink;
+import Basics.Connections;
+import Basics.JsonCityReader;
+import Basics.WikiReader;
 import Storage.Database;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -30,24 +35,24 @@ public class Main {
   //     cncts.loadStationsInfo();
        FileUtilities fl=new FileUtilities();
        Cities city=new Cities();
-     //  Directlink link=new Directlink();
+       Directlink link=new Directlink();
        
        //fl.LoadCities("Cities.txt");
          fl.LoadLinks("Links.txt");
     //   fl.SaveLinks("Links.txt", link.returnLinks(), true);
      
-       System.out.println(city.getCityList().size()); //don't need this line
+      
         Database dtbs=new Database();
         dtbs.Connect();
       
         //dtbs.resetDatabase();       
        // dtbs.writeCitiesToDB(city.getCityList());
-     //   dtbs.writeLinksToDB(link.returnLinks());
+       // dtbs.writeLinksToDB(link.returnLinks());
      
      
-        dtbs.readCitiesFromDB();
+        dtbs.readLinksFromDB();
         dtbs.closeConnection();
-        fl.SaveCities("Cities.txt", city.getCityList(), false);
+        //fl.SaveCities("Cities.txt", city.getCityList(), false);
     }
 
 }

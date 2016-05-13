@@ -46,18 +46,18 @@ public class Connections {
                 if(c1==c2){
                     continue;
                 }
-                jsonBreakDown(url1+cities.get(c1).getId()+url2+cities.get(c2).getId()+url3);
+                linkConfirm(url1+cities.get(c1).getId()+url2+cities.get(c2).getId()+url3);
             }
            System.out.println("Finished getting "+cities.get(c1).getName()+"'s connections.");
         //}
         System.out.println("100% complete. \nData downloading complete.\n ");
         Directlink testlink=new Directlink();
         ArrayList testlist=testlink.returnLinks();
-        System.out.println('1');
+        
     }   
     
     
-    private void jsonBreakDown(String foo){
+    private void linkConfirm(String foo){
         
         try {
          
@@ -68,8 +68,7 @@ public class Connections {
          if (it.hasNext()){
              Directlink templink= new Directlink(cities.get(c1).getName(), cities.get(c1).getId(),cities.get(c2).getName(),cities.get(c2).getId());
              templink.Addlink(templink);
-             //!!!!Delete the line below!!!!
-             System.out.println(c1+" "+c2);
+             
          }
          
             //Catching errors and retrying.
@@ -80,7 +79,7 @@ public class Connections {
             }
         //    if(counter<10){  
                 counter++;
-                jsonBreakDown(foo);
+                linkConfirm(foo);
             //If retrying fails more than four times, the application stops.
          //   }else{
            //     System.out.println("There was an issue with retrieving "+cities.get(c1).getName()+"'s data.\nPlease restart the application and try again.");

@@ -18,6 +18,8 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import Basics.Cities;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Database {
 
@@ -25,7 +27,7 @@ public class Database {
 
     public void Connect() {
 
-        System.out.println("-------- Oracle JDBC Connection Testing ------");
+        System.out.println("------- Oracle JDBC Connection Testing -------");
 
         try {
 
@@ -88,7 +90,7 @@ public class Database {
             try {
                 con.commit();
             } catch (SQLException e) {
-
+                e.printStackTrace();
             }
 
         }
@@ -103,19 +105,19 @@ public class Database {
             String fromName = link.getFromName();
             int toId = link.getToID();
             String toName = link.getToName();
-            String query = "insert into Links Values(" + fromId + " " + fromName + " " + toId + " " + toName + ")";
+            String query = "insert into Links Values(" + fromId + "," + "'" + fromName + "'" + "," + toId + "," + "'" + toName + "'" + ")";
             try {
                 stmt = con.createStatement();
                 stmt.execute(query);
 
             } catch (SQLException e) {
-
+                e.printStackTrace();
             }
 
             try {
                 con.commit();
             } catch (SQLException e) {
-
+                e.printStackTrace();
             }
         }
 
@@ -173,7 +175,7 @@ public class Database {
             ResultSet rs = stmt.executeQuery(query);
             Cities tempCities;
             while (rs.next()) {
-                
+
                 String id = rs.getString("id");
                 System.out.print(id);
                 String name = rs.getString("name");
@@ -185,11 +187,11 @@ public class Database {
             }
 
         } catch (SQLException e) {
-
+            e.printStackTrace();
         } finally {
             if (stmt != null) {
                 try {
-                stmt.close();
+                    stmt.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -199,7 +201,7 @@ public class Database {
         return city.getCityList();
     }
 
-    public ArrayList<Directlink> readLinksFromDB() throws SQLException {
+    public ArrayList<Directlink> readLinksFromDB() {
 
         Statement stmt = null;
         String query = "select fromId, fromName, toId, toName"
@@ -218,10 +220,14 @@ public class Database {
             }
 
         } catch (SQLException e) {
-
+            e.printStackTrace();
         } finally {
             if (stmt != null) {
-                stmt.close();
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         Directlink link = new Directlink();
@@ -232,7 +238,7 @@ public class Database {
         try {
             con.close();
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
     }
 
