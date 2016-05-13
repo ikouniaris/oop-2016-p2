@@ -14,6 +14,7 @@ public class Coordinates {
     //Fields.
     private String type;
     private Double x;
+    private Double y;
 
     public String getType() {
         return type;
@@ -26,12 +27,17 @@ public class Coordinates {
     public Double getY() {
         return y;
     }
-    private Double y;
-
+    
     //Constructor.
     public Coordinates(String type, Double x, Double y) {
         this.x = x;
         this.y = y;
         this.type = type;
     }
+    public Coordinates(String type, String x, String y) {
+        this.x = Double.parseDouble(x);
+        this.y = Double.parseDouble(y);
+        this.type = type;
+    }
+    
 }

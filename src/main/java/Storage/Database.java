@@ -75,7 +75,7 @@ public class Database {
             double coordinatesy = city.getCoordinate().getY();
             int distance = city.getDistance();
 
-            String query = "insert into Cities Values(" + id + ',' +"'"+ name+"'" + ',' + score + ',' +"'"+ coordinatestype+"'" + ',' + coordinatesx + ',' + coordinatesy + ',' + distance + ")";
+            String query = "insert into Cities Values(" + id + ',' + "'" + name + "'" + ',' + score + ',' + "'" + coordinatestype + "'" + ',' + coordinatesx + ',' + coordinatesy + ',' + distance + ")";
 
             try {
                 stmt = con.createStatement();
@@ -83,7 +83,7 @@ public class Database {
                 System.out.print('s');
 
             } catch (SQLException e) {
-e.printStackTrace();
+                e.printStackTrace();
             }
             try {
                 con.commit();
@@ -128,14 +128,14 @@ e.printStackTrace();
             stmt = con.createStatement();
             stmt.execute(query);
         } catch (SQLException e) {
-e.printStackTrace();
+            e.printStackTrace();
         }
-        query = "create table Cities (id varchar(20),name varchar(20),score varchar(20), coordinatetype varchar(20), coordinatex double precision, coordinatey double precision,distance varchar (10))";
+        query = "create table Cities (id number(9),name varchar2(30),score varchar2(20), coordinatetype varchar2(20), coordinatex number(9,6), coordinatey number(9,6),distance varchar2(10))";
         try {
             stmt = con.createStatement();
             stmt.execute(query);
         } catch (SQLException e) {
-e.printStackTrace();
+            e.printStackTrace();
         }
 
         query = "drop table Links";
@@ -143,42 +143,44 @@ e.printStackTrace();
             stmt = con.createStatement();
             stmt.execute(query);
         } catch (SQLException e) {
-e.printStackTrace();
+            e.printStackTrace();
         }
 
-        query = "Create table Links (fromId int, fromName varchar(20), toId int, toName varchar(20));)";
+        query = "Create table Links (fromId number(9), fromName varchar2(30), toId number(9), toName varchar2(30))";
 
         try {
             stmt = con.createStatement();
             stmt.execute(query);
         } catch (SQLException e) {
-e.printStackTrace();
+            e.printStackTrace();
         }
 
         try {
             con.commit();
         } catch (SQLException e) {
-e.printStackTrace();
+            e.printStackTrace();
         }
 
     }
 
-    public ArrayList<Cities> readCitiesFromDB() throws SQLException {
+    public ArrayList<Cities> readCitiesFromDB() {
 
         Statement stmt = null;
-        String query = "select id, name, score, coordinatesX,coordinatesY,coordinatesType, distance"
-                + "from " + "Cities";
+        String query = "select " + "* " + "from " + "Cities";
 
         try {
             stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
+            Cities tempCities;
             while (rs.next()) {
+                
                 String id = rs.getString("id");
+                System.out.print(id);
                 String name = rs.getString("name");
                 String score = rs.getString("score");
-                Coordinates coordinate = new Coordinates(rs.getString("coordinatestype"), rs.getDouble("coordinatesx"), rs.getDouble("coordinatesy"));
+                Coordinates coordinate = new Coordinates(rs.getString("coordinatetype"), rs.getString("coordinatex"), rs.getString("coordinatey"));
                 String distance = rs.getString("distance");
-                Cities tempCities = new Cities(id, name, score, coordinate, distance);
+                tempCities = new Cities(id, name, score, coordinate, distance);
                 tempCities.addCity(tempCities);
             }
 
@@ -186,7 +188,11 @@ e.printStackTrace();
 
         } finally {
             if (stmt != null) {
+                try {
                 stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
         Cities city = new Cities();

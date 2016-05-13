@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Basics;
 
 import java.io.IOException;
@@ -27,7 +22,7 @@ public class Connections {
     
     private int c1,c2;
     //city names list.
-    private ArrayList<String> cities = new ArrayList<String>();
+    private ArrayList<Cities> cities = new ArrayList<Cities>();
     
 
     
@@ -45,12 +40,16 @@ public class Connections {
     //Loading information for every Station from the api.
     public void loadStationsInfo(){
        System.out.println("Retrieving Station information");
-        for ( c1=0;c1<cities.size();c1++) {
-            for (c2=c1+1;c2<cities.size();c2++){
-            jsonBreakDown(url1+cities.get(c1)+url2+cities.get(c2)+url3);
+        //for ( c1=0;c1<cities.size();c1++) {
+        c1=0;    
+            for (c2=0;c2<cities.size();c2++){
+                if(c1==c2){
+                    continue;
+                }
+                jsonBreakDown(url1+cities.get(c1).getId()+url2+cities.get(c2).getId()+url3);
             }
-           System.out.println("Finished getting "+cities.get(c1)+"'s connections.");
-        }
+           System.out.println("Finished getting "+cities.get(c1).getName()+"'s connections.");
+        //}
         System.out.println("100% complete. \nData downloading complete.\n ");
         Directlink testlink=new Directlink();
         ArrayList testlist=testlink.returnLinks();
@@ -67,34 +66,26 @@ public class Connections {
          JSONArray Connections= (JSONArray) jObject.get("connections");
          Iterator it = Connections.iterator();
          if (it.hasNext()){
-             
-             JSONObject tempFrom = (JSONObject) jObject.get("from");
-             String tempname1=(String) tempFrom.get("name");
-             int Id1 = Integer.parseInt(tempFrom.get("id").toString());
-             
-             JSONObject tempTo = (JSONObject) jObject.get("to");
-             String tempname2=(String) tempTo.get("name");
-             int Id2 = Integer.parseInt(tempFrom.get("id").toString());
-             
-             Directlink templink= new Directlink(tempname1,Id1,tempname2,Id2);
+             Directlink templink= new Directlink(cities.get(c1).getName(), cities.get(c1).getId(),cities.get(c2).getName(),cities.get(c2).getId());
              templink.Addlink(templink);
-             System.out.println(c1+' '+c2);
+             //!!!!Delete the line below!!!!
+             System.out.println(c1+" "+c2);
          }
          
             //Catching errors and retrying.
         }catch(IOException | ParseException e){
             if(counter==0){
                 flag=false;
-                System.out.println("An error occurred while trying to get "+cities.get(c1)+"'s information. \nRetrying...");
+                System.out.println("An error occurred while trying to get "+cities.get(c1).getName()+"'s information. \nRetrying...");
             }
-            if(counter<5){  
+        //    if(counter<10){  
                 counter++;
                 jsonBreakDown(foo);
             //If retrying fails more than four times, the application stops.
-            }else{
-                System.out.println("There was an issue with retrieving "+cities.get(c1)+"'s data.\nPlease restart the application and try again.");
-                System.exit(1);
-            }
+         //   }else{
+           //     System.out.println("There was an issue with retrieving "+cities.get(c1).getName()+"'s data.\nPlease restart the application and try again.");
+             //   System.exit(1);
+            //}
         }
         if(!flag){
             System.out.println("The error has been resolved. Continuing to the next Station.");
@@ -106,4 +97,3 @@ public class Connections {
     
   
 }
-
