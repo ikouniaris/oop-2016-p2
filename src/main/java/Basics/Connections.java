@@ -51,7 +51,7 @@ public class Connections {
            System.out.println("Finished getting "+cities.get(c1).getName()+"'s connections.");
         //}
         System.out.println("100% complete. \nData downloading complete.\n ");
-        Directlink testlink=new Directlink();
+        Links testlink=new Links();
         ArrayList testlist=testlink.returnLinks();
         
     }   
@@ -66,7 +66,7 @@ public class Connections {
          JSONArray Connections= (JSONArray) jObject.get("connections");
          Iterator it = Connections.iterator();
          if (it.hasNext()){
-             Directlink templink= new Directlink(cities.get(c1).getName(), cities.get(c1).getId(),cities.get(c2).getName(),cities.get(c2).getId());
+             Links templink= new Links(cities.get(c1).getName(), cities.get(c1).getId(),cities.get(c2).getName(),cities.get(c2).getId());
              templink.Addlink(templink);
              
          }

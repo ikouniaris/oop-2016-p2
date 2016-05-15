@@ -11,4 +11,12 @@ package Storage;
  */
 public class DBHasDataException extends Exception{
     
+    public DBHasDataException(){
+        
+    }
+    
+    public DBHasDataException(String ms){
+        super(ms);
+    }
+    
 }

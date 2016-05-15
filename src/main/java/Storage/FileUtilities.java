@@ -10,7 +10,7 @@ package Storage;
  * @author Cryowynd
  */
 import Basics.Cities;
-import Basics.Directlink;
+import Basics.Links;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -25,7 +25,7 @@ import Basics.Coordinates;
 
 public class FileUtilities {
 
-    private  ArrayList<Directlink> Links = new ArrayList<Directlink>();
+    private  ArrayList<Links> Links = new ArrayList<Links>();
     private  ArrayList<Cities> CitiesList = new ArrayList<Cities>();
 
     public FileUtilities() {
@@ -37,7 +37,7 @@ public class FileUtilities {
 
         Links = Connections;
 
-        for (Directlink link : Links) {
+        for (Links link : Links) {
 
             pw.println(link.getFromName() + " " + link.getFromID() + " " + link.getToName() + " " + link.getToID());
 
@@ -71,7 +71,7 @@ public class FileUtilities {
 	String line = null;
 	while ((line = br.readLine()) != null) {
 		String[] lines=line.split("\\s+");
-                Directlink templink=new Directlink(lines[0],Integer.parseInt(lines[1]),lines[2],Integer.parseInt(lines[3]));
+                Links templink=new Links(lines[0],Integer.parseInt(lines[1]),lines[2],Integer.parseInt(lines[3]));
                 templink.Addlink(templink);            
 	}
  

@@ -9,7 +9,7 @@ package Storage;
  *
  * @author Cryowynd
  */
-import Basics.Directlink;
+import Basics.Links;
 import Basics.Coordinates;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import Basics.Cities;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Storage.DBHasDataException;
 
 public class Database {
 
@@ -64,7 +65,7 @@ public class Database {
         }
     }
 
-    public void writeCitiesToDB(ArrayList<Cities> cities) /*throws DBHasDataException*/ {
+    public void writeCitiesToDB(ArrayList<Cities> cities) throws DBHasDataException {
         Statement stmt = null;
 
         for (Cities city : cities) {
@@ -77,12 +78,23 @@ public class Database {
             double coordinatesy = city.getCoordinate().getY();
             int distance = city.getDistance();
 
-            String query = "insert into Cities Values(" + id + ',' + "'" + name + "'" + ',' + score + ',' + "'" + coordinatestype + "'" + ',' + coordinatesx + ',' + coordinatesy + ',' + distance + ")";
+            String query = "select * from Cities";
+            try {
+                stmt = con.createStatement();
+                ResultSet rslt = stmt.executeQuery(query);
+                while (rslt.next()) {
+                    throw new DBHasDataException("Database contains data!");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            query = "insert into Cities Values(" + id + ',' + "'" + name + "'" + ',' + score + ',' + "'" + coordinatestype + "'" + ',' + coordinatesx + ',' + coordinatesy + ',' + distance + ")";
 
             try {
                 stmt = con.createStatement();
                 stmt.executeUpdate(query);
-                System.out.print('s');
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -97,15 +109,28 @@ public class Database {
 
     }
 
-    public void writeLinksToDB(ArrayList<Directlink> links) /*throws DBHasDataException*/ {
+    public void writeLinksToDB(ArrayList<Links> links) throws DBHasDataException {
         Statement stmt = null;
 
-        for (Directlink link : links) {
+        for (Links link : links) {
             int fromId = link.getFromID();
             String fromName = link.getFromName();
             int toId = link.getToID();
             String toName = link.getToName();
-            String query = "insert into Links Values(" + fromId + "," + "'" + fromName + "'" + "," + toId + "," + "'" + toName + "'" + ")";
+
+            String query = "select * from Links";
+            try {
+                stmt = con.createStatement();
+                ResultSet rslt = stmt.executeQuery(query);
+                while (rslt.next()) {
+                    throw new DBHasDataException("Database contains data!");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            query = "insert into Links Values(" + fromId + "," + "'" + fromName + "'" + "," + toId + "," + "'" + toName + "'" + ")";
             try {
                 stmt = con.createStatement();
                 stmt.execute(query);
@@ -201,11 +226,11 @@ public class Database {
         return city.getCityList();
     }
 
-    public ArrayList<Directlink> readLinksFromDB() {
+    public ArrayList<Links> readLinksFromDB() {
 
         Statement stmt = null;
-        String query = "select fromId, fromName, toId, toName"
-                + "from " + "Connections";
+        String query = "select fromId, fromName, toId, toName "
+                + "from " + "Links";
 
         try {
             stmt = con.createStatement();
@@ -215,7 +240,7 @@ public class Database {
                 String fromName = rs.getString("fromName");
                 int toId = rs.getInt("toId");
                 String toName = rs.getString("toName");
-                Directlink tempLink = new Directlink(fromName, fromId, toName, toId);
+                Links tempLink = new Links(fromName, fromId, toName, toId);
                 tempLink.Addlink(tempLink);
             }
 
@@ -230,7 +255,7 @@ public class Database {
                 }
             }
         }
-        Directlink link = new Directlink();
+        Links link = new Links();
         return link.returnLinks();
     }
 
