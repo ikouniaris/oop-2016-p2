@@ -45,17 +45,15 @@ public class Cities {
         }
     }
 
-    public Cities(){
-        
+    public Cities() {
+
     }
-    
+
     //Getters and Setters.
     public void addCity(Cities city) {
         citiesList.add(city);
-        
+
     }
-    
- 
 
     public ArrayList getCityList() {
         return citiesList;
