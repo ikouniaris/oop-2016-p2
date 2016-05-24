@@ -5,91 +5,99 @@
  */
 package Basics;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 /**
  *
- * @author Ilianna
+ * @author Cryowynd
  */
-import java.util.LinkedList;
-import java.util.ArrayList;
-import Basics.Links;
-
 public class IndirectCon {
 
-    private int toID;
-    private int fromID;
     private ArrayList<Links> xoxo;
-    private ArrayList<Integer> temp = new ArrayList<Integer>();
-    private LinkedList<Node> tempnodeList = new LinkedList<Node>();
-    private static ArrayList<LinkedList> ListOfOmens = new ArrayList<LinkedList>();
-    private static LinkedList<Node> nodeList = new LinkedList<Node>();
-    public IndirectCon(int fromID, int toID, ArrayList<Links> xoxo) {
-        this.fromID = fromID;
-        this.toID = toID;
+    private LinkedList<Node> encounteredList = new LinkedList<Node>();
+private static ArrayList<LinkedList> ListOfOmens = new ArrayList<LinkedList>();
+    private static boolean check = false;
+
+    private static int counter;
+
+    public IndirectCon(ArrayList<Links> xoxo) {
+
         this.xoxo = xoxo;
     }
 
-    public IndirectCon(int fromID, int toID, ArrayList<Links> xoxo, LinkedList found) {
-        this.fromID = fromID;
-        this.toID = toID;
-        this.xoxo = xoxo;
-        nodeList = found;
-    }
+    //Finding the shortest routing path between 2 nodes
+    public LinkedList findIndLinks(int fromID, int toID, int dist) {
+        LinkedList<Node> tempnodeList = new LinkedList<Node>();
+        ArrayList<Integer> path = new ArrayList<Integer>();
+        path = getLinkByID(fromID);
 
-    
-    
-    
-    
-    public LinkedList findIndLinks(int fromID) {
-
-        temp = getLinkByID(fromID);
-        
-        Node firstNode=new Node(fromID);
+        int esize = encounteredList.size();
+        Node firstNode = new Node(fromID);
+        encounteredList.add(firstNode);
         tempnodeList.add(firstNode);
-        
-        for (int i = 0; i < temp.size(); i++) {
-            if (Reappear(temp.get(i))) {
-                
+
+        for (int i = 0; i < path.size(); i++) {
+            System.out.println(i);
+            if (path.isEmpty()) {
                 continue;
             }
-            if (toID == temp.get(i)) {
-                Node tempNode=new Node(temp.get(i)); 
+            if (Reappear(path.get(i), encounteredList, dist)) {
+
+                encounteredList.subList(dist, esize).clear();
+
+                continue;
+            }
+            if (toID == path.get(i)) {
+                Node tempNode = new Node(path.get(i));
+                tempNode.setCheck(true);
                 tempnodeList.add(tempNode);
-                return tempnodeList;
-            } else {
-               LinkedList testlist= findIndLinks(temp.get(i));
-               if ((tempnodeList.size()>testlist.size())||(tempnodeList.size()==0)){
-                   tempnodeList=testlist;
-               }
+                ListOfOmens.add(tempnodeList);
+                check = true;
+                counter = tempnodeList.size();
+                continue;
             }
         }
-return tempnodeList;
+
+        if (path.size() < encounteredList.size()) {
+
+        }
+
+        if (!check && counter <= tempnodeList.size()) {
+            for (int i = 0; i < path.size(); i++) {
+                LinkedList<Node> testlist = findIndLinks(path.get(i), toID, dist + 1);
+                if (testlist.getLast().getID() != toID) {
+                    continue;
+                }
+                int size = tempnodeList.size();
+                if (size - 1 == 0) {
+                    tempnodeList.addAll(testlist);
+                } else if (tempnodeList.size() - 1 > testlist.size()) {
+                    tempnodeList = testlist;
+
+                }
+            }
+            System.out.println("Sorry, those two can't be connected!");
+            return null;
+
+        }
+        return tempnodeList;
+
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    private boolean Reappear(int id) {
-        for (Node tempNode : nodeList) {
-            if (id == tempNode.getID()) {
-                return true;
+    private boolean Reappear(int id, LinkedList<Node> list, int dist) {
+        for (int i = 0; i < dist + 1; i++) {
+            if (!list.isEmpty()) {
+                if (id == list.get(i).getID()) {
+                    return true;
+                }
             }
         }
-        
-        for (Node tempNode : nodeList) {
-            if (id == tempNode.getID()) {
-                return true;
-            }
-        } 
+
         return false;
-    
+
     }
-    
-    
+
     public ArrayList getLinkByID(int id) {
         ArrayList<Integer> toList = new ArrayList<Integer>();
         for (Links templink : xoxo) {

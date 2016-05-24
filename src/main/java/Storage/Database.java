@@ -26,9 +26,10 @@ public class Database {
 
     Connection con;
 
+    //Connecting to database
     public void Connect() {
 
-        System.out.println("------- Oracle JDBC Connection Testing -------");
+        System.out.println ("Oracle JDBC Connection Testing");
 
         try {
 
@@ -36,13 +37,13 @@ public class Database {
 
         } catch (ClassNotFoundException e) {
 
-            System.out.println("Where is your Oracle JDBC Driver?");
+            System.out.println("No driver detected");
             e.printStackTrace();
             return;
 
         }
 
-        System.out.println("Oracle JDBC Driver Registered!");
+        System.out.println("Driver found");
 
         con = null;
 
@@ -52,19 +53,20 @@ public class Database {
 
         } catch (SQLException e) {
 
-            System.out.println("Connection Failed! Check output console");
+            System.out.println("Connection Failed! ");
             e.printStackTrace();
             return;
 
         }
 
         if (con != null) {
-            System.out.println("You made it, take control your database now!");
+            System.out.println("Connection made!");
         } else {
             System.out.println("Failed to make connection!");
         }
     }
 
+    //Writing Cities to database
     public void writeCitiesToDB(ArrayList<Cities> cities) throws DBHasDataException {
         Statement stmt = null;
 
@@ -109,6 +111,7 @@ public class Database {
 
     }
 
+    //Writting links to database
     public void writeLinksToDB(ArrayList<Links> links) throws DBHasDataException {
         Statement stmt = null;
 
@@ -148,6 +151,7 @@ public class Database {
 
     }
 
+    //Resetting database
     public void resetDatabase() {
         Statement stmt = null;
         String query = "drop table Cities";
@@ -190,6 +194,7 @@ public class Database {
 
     }
 
+    //Loading cities from database
     public ArrayList<Cities> readCitiesFromDB() {
 
         Statement stmt = null;
@@ -226,6 +231,7 @@ public class Database {
         return city.getCityList();
     }
 
+    //Loading connections from database
     public ArrayList<Links> readLinksFromDB() {
 
         Statement stmt = null;
@@ -259,6 +265,7 @@ public class Database {
         return link.returnLinks();
     }
 
+    //Closing connection to database
     public void closeConnection() {
         try {
             con.close();

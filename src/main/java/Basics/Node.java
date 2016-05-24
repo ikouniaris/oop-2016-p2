@@ -9,43 +9,31 @@ package Basics;
  *
  * @author Ilianna
  */
-
-
-
-
 public class Node {
-    private boolean check=false;
+
+    private boolean check = false;
     private int id;
-    
-    
-    
-    
-    
-    public Node(int id){
-        this.id=id;
+
+    public Node(int id) {
+        this.id = id;
     }
-    
-    
-    
+
     //see getnext get precious
     //constructor that sets previous node
-    
-    
-    void setID(int id){
-        this.id=id;
+    void setID(int id) {
+        this.id = id;
     }
-    
-    void setCheck(boolean check){
-        this.check=check;
+
+    void setCheck(boolean check) {
+        this.check = check;
     }
-    
-    boolean getCheck(){
+
+    boolean getCheck() {
         return check;
     }
-    
-    int getID(){
+
+    int getID() {
         return id;
     }
-    
 
 }

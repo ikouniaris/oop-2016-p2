@@ -25,37 +25,50 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-      //  WikiReader wr = new WikiReader();
+        WikiReader wr = new WikiReader();
       //  Loading city names from wikipedia.
-       // wr.loadCityNames("https://en.wikipedia.org/wiki/List_of_cities_in_Switzerland");
+        wr.loadCityNames("https://en.wikipedia.org/wiki/List_of_cities_in_Switzerland");
 
-//        JsonCityReader jcr = new JsonCityReader(wr.getCities());
-       //Loading city information from the api.
-  //     jcr.loadCitiesInfo("http://transport.opendata.ch/v1/locations?query=");
-   //    Connections cncts= new Connections(wr.getCities());
-     //  cncts.loadStationsInfo();
+        JsonCityReader jcr = new JsonCityReader(wr.getCities());
+      // Loading city information from the api.
+      jcr.loadCitiesInfo("http://transport.opendata.ch/v1/locations?query=");
+      
+      //Finds Connections between the cities from the api
+       Connections cncts= new Connections(wr.getCities());
+       cncts.loadStationsInfo();
+       
+       
        FileUtilities fl=new FileUtilities();
        Cities city=new Cities();
-       //Directlink link=new Directlink();
+       Links link=new Links();
        
+       //Loading information from files
        fl.LoadCities("Cities.txt");
-     //    fl.LoadLinks("Links.txt");
-      //   fl.SaveCities("Cities.txt", city.getCityList(), true);
-      // fl.SaveLinks("Links.txt", link.returnLinks(), true);
+         fl.LoadLinks("Links.txt");
+         
+         //Saving information to files
+         fl.SaveCities("Cities.txt", city.getCityList(), true);
+       fl.SaveLinks("Links.txt", link.returnLinks(), true);
      
-      
+       //Database managment
         Database dtbs=new Database();
         dtbs.Connect();
       
+        //Writting data to database
         try {      
         dtbs.writeCitiesToDB(city.getCityList());
-      //  dtbs.writeLinksToDB(link.returnLinks());
+        dtbs.writeLinksToDB(link.returnLinks());
         }catch (DBHasDataException e) {
-           // dtbs.resetDatabase();
+            //if database has data, resets it
+            dtbs.resetDatabase();
             e.printStackTrace();
         } 
      
+        //Reads data from databases.
+        dtbs.readCitiesFromDB();
         dtbs.readLinksFromDB();
+        
+        //Closes the connection
         dtbs.closeConnection();
         
     }

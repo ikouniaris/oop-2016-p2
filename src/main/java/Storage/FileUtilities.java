@@ -20,17 +20,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import Basics.Coordinates;
 
-
-
-
 public class FileUtilities {
 
-    private  ArrayList<Links> Links = new ArrayList<Links>();
-    private  ArrayList<Cities> CitiesList = new ArrayList<Cities>();
+    private ArrayList<Links> Links = new ArrayList<Links>();
+    private ArrayList<Cities> CitiesList = new ArrayList<Cities>();
+//Blank constructor
 
     public FileUtilities() {
 
     }
+//Saving links between cities to file
 
     public void SaveLinks(String FileName, ArrayList Connections, boolean mode) throws FileNotFoundException, IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(FileName, mode));
@@ -41,11 +40,11 @@ public class FileUtilities {
 
             pw.println(link.getFromName() + " " + link.getFromID() + " " + link.getToName() + " " + link.getToID());
 
-            
         }
         pw.close();
     }
-    
+
+    //Saving cities to file
     public void SaveCities(String FileName, ArrayList Cities, boolean mode) throws FileNotFoundException, IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(FileName, mode));
 
@@ -53,51 +52,41 @@ public class FileUtilities {
 
         for (Cities City : CitiesList) {
 
-            pw.println(City.getId()+" "+City.getName()+" "+City.getScore()+" "+City.getCoordinate().getX()+" "+City.getCoordinate().getY()+" "+City.getCoordinate().getType()+" "+City.getDistance());
+            pw.println(City.getId() + " " + City.getName() + " " + City.getScore() + " " + City.getCoordinate().getX() + " " + City.getCoordinate().getY() + " " + City.getCoordinate().getType() + " " + City.getDistance());
 
-            
         }
         pw.close();
     }
-    
-    
-    
-    
-    
+
+    //Loading Connections from files
     public void LoadLinks(String Name) throws IOException {
-	
-	BufferedReader br = new BufferedReader(new FileReader(Name));
- 
-	String line = null;
-	while ((line = br.readLine()) != null) {
-		String[] lines=line.split("\\s+");
-                Links templink=new Links(lines[0],Integer.parseInt(lines[1]),lines[2],Integer.parseInt(lines[3]));
-                templink.Addlink(templink);            
-	}
- 
-	br.close();
-}
-    
-    
-    
+
+        BufferedReader br = new BufferedReader(new FileReader(Name));
+
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            String[] lines = line.split("\\s+");
+            Links templink = new Links(lines[0], Integer.parseInt(lines[1]), lines[2], Integer.parseInt(lines[3]));
+            templink.Addlink(templink);
+        }
+
+        br.close();
+    }
+
+    //Loading Cities from list
     public void LoadCities(String Name) throws IOException {
-	
-	BufferedReader br = new BufferedReader(new FileReader(Name));
- 
-	String line = null;
-	while ((line = br.readLine()) != null) {
-		String[] lines=line.split("\\s+");
-                Coordinates tempCoordinates=new Coordinates(lines[5],Double.parseDouble(lines[3]),Double.parseDouble(lines[4]));
-                Cities tempcity=new Cities(lines[0],lines[1],lines[2], tempCoordinates, lines[6]);
-                tempcity.addCity(tempcity); 
-	}
- Cities ncity=new Cities();
-	br.close();
-}
-    
-        
-    
-    
-    
-    
+
+        BufferedReader br = new BufferedReader(new FileReader(Name));
+
+        String line = null;
+        while ((line = br.readLine()) != null) {
+            String[] lines = line.split("\\s+");
+            Coordinates tempCoordinates = new Coordinates(lines[5], Double.parseDouble(lines[3]), Double.parseDouble(lines[4]));
+            Cities tempcity = new Cities(lines[0], lines[1], lines[2], tempCoordinates, lines[6]);
+            tempcity.addCity(tempcity);
+        }
+        Cities ncity = new Cities();
+        br.close();
+    }
+
 }

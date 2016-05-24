@@ -9,14 +9,14 @@ package Storage;
  *
  * @author Cryowynd
  */
-public class DBHasDataException extends Exception{
-    
-    public DBHasDataException(){
-        
+public class DBHasDataException extends Exception {
+
+    public DBHasDataException() {
+
     }
-    
-    public DBHasDataException(String ms){
+
+    public DBHasDataException(String ms) {
         super(ms);
     }
-    
+
 }
