@@ -22,7 +22,7 @@ import Basics.Coordinates;
 
 public class FileUtilities {
 
-    private ArrayList<Links> Links = new ArrayList<Links>();
+   
     
 //Blank constructor
 
