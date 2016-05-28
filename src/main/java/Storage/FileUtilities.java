@@ -23,7 +23,7 @@ import Basics.Coordinates;
 public class FileUtilities {
 
     private ArrayList<Links> Links = new ArrayList<Links>();
-    private ArrayList<Cities> CitiesList = new ArrayList<Cities>();
+    
 //Blank constructor
 
     public FileUtilities() {
@@ -45,12 +45,12 @@ public class FileUtilities {
     }
 
     //Saving cities to file
-    public void SaveCities(String FileName, ArrayList Cities, boolean mode) throws FileNotFoundException, IOException {
+    public void SaveCities(String FileName, ArrayList<Cities> Cities, boolean mode) throws FileNotFoundException, IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(FileName, mode));
 
-        CitiesList = Cities;
+        
 
-        for (Cities City : CitiesList) {
+        for (Cities City : Cities) {
 
             pw.println(City.getId() + " " + City.getName() + " " + City.getScore() + " " + City.getCoordinate().getX() + " " + City.getCoordinate().getY() + " " + City.getCoordinate().getType() + " " + City.getDistance());
 
@@ -85,7 +85,6 @@ public class FileUtilities {
             Cities tempcity = new Cities(lines[0], lines[1], lines[2], tempCoordinates, lines[6]);
             tempcity.addCity(tempcity);
         }
-        Cities ncity = new Cities();
         br.close();
     }
 
