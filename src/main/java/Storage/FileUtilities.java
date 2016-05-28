@@ -31,12 +31,12 @@ public class FileUtilities {
     }
 //Saving links between cities to file
 
-    public void SaveLinks(String FileName, ArrayList Connections, boolean mode) throws FileNotFoundException, IOException {
+    public void SaveLinks(String FileName, ArrayList<Links> Connections, boolean mode) throws FileNotFoundException, IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(FileName, mode));
 
-        Links = Connections;
 
-        for (Links link : Links) {
+
+        for (Links link : Connections) {
 
             pw.println(link.getFromName() + " " + link.getFromID() + " " + link.getToName() + " " + link.getToID());
 
