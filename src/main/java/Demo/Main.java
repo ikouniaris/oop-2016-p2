@@ -15,6 +15,7 @@ import Storage.Database;
 import java.util.ArrayList;
 import java.io.IOException;
 import Storage.FileUtilities;
+import Gui.JWindow;
 /**
  *
  * @author Ilianna
@@ -25,7 +26,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        WikiReader wr = new WikiReader();
+    /*    WikiReader wr = new WikiReader();
       //  Loading city names from wikipedia.
         wr.loadCityNames("https://en.wikipedia.org/wiki/List_of_cities_in_Switzerland");
 
@@ -69,8 +70,10 @@ public class Main {
         dtbs.readLinksFromDB();
         
         //Closes the connection
-        dtbs.closeConnection();
+        dtbs.closeConnection();*/
         
+        JWindow j = new JWindow();
+        j.test();
     }
 
 }
