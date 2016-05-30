@@ -26,7 +26,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-    /*    WikiReader wr = new WikiReader();
+        WikiReader wr = new WikiReader();
       //  Loading city names from wikipedia.
         wr.loadCityNames("https://en.wikipedia.org/wiki/List_of_cities_in_Switzerland");
 
@@ -42,15 +42,15 @@ public class Main {
        FileUtilities fl=new FileUtilities();
        Cities city=new Cities();
        Links link=new Links();
-       
+ /*      
        //Loading information from files
        fl.LoadCities("Cities.txt");
          fl.LoadLinks("Links.txt");
-         
+   */      
          //Saving information to files
          fl.SaveCities("Cities.txt", city.getCityList(), true);
        fl.SaveLinks("Links.txt", link.returnLinks(), true);
-     
+    /* 
        //Database managment
         Database dtbs=new Database();
         dtbs.Connect();
@@ -70,8 +70,8 @@ public class Main {
         dtbs.readLinksFromDB();
         
         //Closes the connection
-        dtbs.closeConnection();*/
-        
+        dtbs.closeConnection();
+      */  
         JWindow j = new JWindow();
         j.test();
     }

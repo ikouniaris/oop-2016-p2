@@ -1,8 +1,12 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Basics;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
@@ -12,56 +16,57 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author Cryowynd
+ * @author it21447
  */
-public class Connections {
-
-    private String url1 = "http://transport.opendata.ch/v1/connections?from=";
+public class LoadStationT extends Thread{
+     private String url1 = "http://transport.opendata.ch/v1/connections?from=";
     private String url2 = "&to=";
     private String url3 = "&direct=1";
-
-    private int c1, c2;
-    //city names list.
-    private ArrayList<Cities> cities = new ArrayList<Cities>();
-
-    //Error check variables.
-    private boolean flag = true;
-    private int counter = 0;
-
-    //Constructor.
-    public Connections(ArrayList cities) {
-        this.cities = cities;
-    }
-
-    //Loading information for every Station from the api.
-    public void loadStationsInfo() {
+    int counter;
+    int c1;
+    int c2;
+    static ArrayList<Cities> cities;
+    boolean flag;
+    
+    public LoadStationT(ArrayList<Cities> cities){
+        this.cities=cities;
         
-        LoadStationT loop=new LoadStationT(cities);
         
     }
-}
-        /*
-        System.out.println("Retrieving Station information");
-        //for ( c1=0;c1<cities.size();c1++) {
-        c1 = 0;
+    
+    
+    public LoadStationT(int c1){
+    this.c1=c1;
+    }
+    
+  public void run() {
+
+      
+      System.out.println("Retrieving Station information");
+        
         for (c2 = 0; c2 < cities.size(); c2++) {
-            if (c1 == c2) {
-                continue;
-            }
+            
             linkConfirm(url1 + cities.get(c1).getId() + url2 + cities.get(c2).getId() + url3);
         }
-        System.out.println("Finished getting " + cities.get(c1).getName() + "'s connections.");
-        //}
+  //      System.out.println("Finished getting " + cities.get(c1).getName() + "'s connections.");
+        
         System.out.println("100% complete. \nData downloading complete.\n ");
-        
-        //Probably delete these
-        
-        Links testlink = new Links();
-        ArrayList testlist = testlink.returnLinks();
+      
+      
+}
+  
+ 
+  
+public void loop (int c1) {
+    for ( c1=0;c1<cities.size();c1++) { 
+(new LoadStationT(c1)).start();
+}   
+}
+    
+    
 
-    }
 
-    private void linkConfirm(String foo) {
+private void linkConfirm(String foo) {
 
         try {
 
@@ -98,8 +103,4 @@ public class Connections {
 
     }
 
-  
-*/
-        
-
-
+}
