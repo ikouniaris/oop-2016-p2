@@ -6,6 +6,7 @@
 package Basics;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  *
@@ -15,6 +16,8 @@ public class Links {
 
     private String FromName, ToName;
     private int FromID, ToID;
+    private boolean IsDirect = true;
+    private LinkedList FullPath;
 
     private static volatile ArrayList<Links> Links = new ArrayList<Links>();
 
@@ -24,6 +27,15 @@ public class Links {
         ToName = name2;
         ToID = id2;
 
+    }
+
+    public Links(int id1, int id2, LinkedList nodelist) {
+        FromName = getNameById(id1);
+        FromID = id1;
+        ToName = getNameById(id2);
+        ToID = id2;
+        IsDirect = false;
+        FullPath = nodelist;
     }
 
     public Links() {
@@ -53,6 +65,24 @@ public class Links {
 
     public int getToID() {
         return ToID;
+    }
+
+    public String getNameById(int id) {
+        Cities tempCity = new Cities();
+        String tempName = tempCity.getNameById(id);
+        return tempName;
+    }
+
+    public boolean IsDirect() {
+        return IsDirect;
+    }
+
+    public Links getLinkByIndex(int i) {
+        return Links.get(i);
+    }
+
+    public int getListSize() {
+        return Links.size();
     }
 
 }

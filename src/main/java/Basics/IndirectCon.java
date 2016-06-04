@@ -20,12 +20,16 @@ public class IndirectCon {
     private static boolean check = false;
 
     private static int counter;
-
+    
     public IndirectCon(ArrayList<Links> ListOfLinks) {
 
         this.ListOfLinks = ListOfLinks;
     }
 
+    public IndirectCon(){
+        
+    }
+    
     //Finding the shortest routing path between 2 nodes
     public LinkedList findIndLinks(int fromID, int toID, int dist) {
         LinkedList<Node> tempnodeList = new LinkedList<Node>();
@@ -107,5 +111,14 @@ public class IndirectCon {
         }
         return toList;
     }
+    
+    public LinkedList getFullPath(int id){
+        return ListOfLists.get(id);
+    }
 
+    
+    
+        //Place this line appropriately so that tempnodelist contains the full path from start node to finish
+                Links newLink=new Links(fromID,toID,tempnodeList);
+    
 }

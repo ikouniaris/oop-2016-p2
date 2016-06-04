@@ -64,8 +64,27 @@ public class Database {
     }
 
     //Writing Cities to database
-    public void writeCitiesToDB(ArrayList<Cities> cities) {//throws DBHasDataException {
+    public void writeCitiesToDB(ArrayList<Cities> cities) throws DBHasDataException {
         Statement stmt = null;
+        boolean IsEmpty = true;
+
+        String query = "select * from Cities";
+        try {
+            stmt = con.createStatement();
+            ResultSet rslt = stmt.executeQuery(query);
+            while (rslt.next()) {
+                IsEmpty = false;
+            }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
+            if (!IsEmpty) {
+                throw new DBHasDataException("Database contains data!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         for (Cities city : cities) {
 
@@ -77,24 +96,15 @@ public class Database {
             double coordinatesy = city.getCoordinate().getY();
             int distance = city.getDistance();
 
-            String query = "select * from Cities";
-            try {
-                stmt = con.createStatement();
-                ResultSet rslt = stmt.executeQuery(query);
-  //              while (rslt.next()) {
-    //                throw new DBHasDataException("Database contains data!");
-      //          }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
             query = "insert into Cities Values(" + id + ',' + "'" + name + "'" + ',' + score + ',' + "'" + coordinatestype + "'" + ',' + coordinatesx + ',' + coordinatesy + ',' + distance + ")";
 
             try {
                 stmt = con.createStatement();
                 stmt.executeUpdate(query);
-try { stmt.close(); } catch (Exception ignore) { }
+                try {
+                    stmt.close();
+                } catch (Exception ignore) {
+                }
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -110,42 +120,51 @@ try { stmt.close(); } catch (Exception ignore) { }
     }
 
     //Writting links to database
-    public void writeLinksToDB(ArrayList<Links> links) {//throws DBHasDataException {
+    public void writeLinksToDB(ArrayList<Links> links) throws DBHasDataException {
+        int c1;
         Statement stmt = null;
 
-        for (Links link : links) {
-            int fromId = link.getFromID();
-            String fromName = link.getFromName();
-            int toId = link.getToID();
-            String toName = link.getToName();
+        boolean IsEmpty = true;
 
-            String query = "select * from Links";
-            try {
-                stmt = con.createStatement();
-                ResultSet rslt = stmt.executeQuery(query);
-               // while (rslt.next()) {
-               //     throw new DBHasDataException("Database contains data!");
-               // }
-try { stmt.close(); } catch (Exception ignore) { }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        String query = "select * from Links";
+        try {
+            stmt = con.createStatement();
+            ResultSet rslt = stmt.executeQuery(query);
+            while (rslt.next()) {
+                IsEmpty = false;
             }
-
-            query = "insert into Links Values(" + fromId + "," + "'" + fromName + "'" + "," + toId + "," + "'" + toName + "'" + ")";
             try {
-                stmt = con.createStatement();
-                stmt.execute(query);
-try { stmt.close(); } catch (Exception ignore) { }
-            } catch (SQLException e) {
-                e.printStackTrace();
+                stmt.close();
+            } catch (Exception ignore) {
             }
+            if (!IsEmpty) {
+                throw new DBHasDataException("Database contains data!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        ArrayList<Thread> threads = new ArrayList<Thread>();
+        //Starting 3 original threads
+        Links link = new Links();
+        for (c1 = 0; c1 < 10; c1++) {
+            threads.add(new WriteLinksThread(link.getLinkByIndex(c1), con));
+            threads.get(c1).start();
+        }
+        //Until all links are written, a new thread starts when one finishes.
+        for (int i = 0; i < link.getListSize(); i++) {
             try {
-                con.commit();
-            } catch (SQLException e) {
+                threads.get(i).join();
+                if (c1 < link.getListSize()) {
+                    threads.add(new WriteLinksThread(link.getLinkByIndex(c1), con));
+                    threads.get(c1++).start();
+                }
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+        threads.clear();
 
     }
 
@@ -156,7 +175,10 @@ try { stmt.close(); } catch (Exception ignore) { }
         try {
             stmt = con.createStatement();
             stmt.execute(query);
-            try { stmt.close(); } catch (Exception ignore) { }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -164,7 +186,10 @@ try { stmt.close(); } catch (Exception ignore) { }
         try {
             stmt = con.createStatement();
             stmt.execute(query);
-            try { stmt.close(); } catch (Exception ignore) { }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,7 +198,10 @@ try { stmt.close(); } catch (Exception ignore) { }
         try {
             stmt = con.createStatement();
             stmt.execute(query);
-            try { stmt.close(); } catch (Exception ignore) { }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -183,7 +211,10 @@ try { stmt.close(); } catch (Exception ignore) { }
         try {
             stmt = con.createStatement();
             stmt.execute(query);
-            try { stmt.close(); } catch (Exception ignore) { }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -195,33 +226,36 @@ try { stmt.close(); } catch (Exception ignore) { }
         }
 
     }
-    
+
     //Creating database
-    public void createDB(){
+    public void createDB() {
         Statement stmt = null;
-        
+
         String query = "create table Cities (id number(9),name varchar2(30),score varchar2(20), coordinatetype varchar2(20), coordinatex number(9,6), coordinatey number(9,6),distance varchar2(10))";
         try {
             stmt = con.createStatement();
             stmt.execute(query);
-            try { stmt.close(); } catch (Exception ignore) { }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
-        
-         query = "Create table Links (fromId number(9), fromName varchar2(30), toId number(9), toName varchar2(30))";
+
+        query = "Create table Links (fromId number(9), fromName varchar2(30), toId number(9), toName varchar2(30))";
 
         try {
             stmt = con.createStatement();
             stmt.execute(query);
-            try { stmt.close(); } catch (Exception ignore) { }
+            try {
+                stmt.close();
+            } catch (Exception ignore) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        
+
     }
 
     //Loading cities from database
@@ -237,7 +271,6 @@ try { stmt.close(); } catch (Exception ignore) { }
             while (rs.next()) {
 
                 String id = rs.getString("id");
-                System.out.print(id);
                 String name = rs.getString("name");
                 String score = rs.getString("score");
                 Coordinates coordinate = new Coordinates(rs.getString("coordinatetype"), rs.getString("coordinatex"), rs.getString("coordinatey"));

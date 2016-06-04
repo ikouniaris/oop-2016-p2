@@ -103,4 +103,14 @@ public class Cities {
         return namesList;
     }
 
+    
+    public String getNameById(int id){
+        String tempName="";
+        for (Cities city:citiesList){
+            if (id==city.getId()){
+               tempName=city.getName();
+            }
+        }
+        return tempName;
+    }
 }
