@@ -16,7 +16,7 @@ public class Links {
     private String FromName, ToName;
     private int FromID, ToID;
 
-    private static ArrayList<Links> Links = new ArrayList<Links>();
+    private static volatile ArrayList<Links> Links = new ArrayList<Links>();
 
     public Links(String name1, int id1, String name2, int id2) {
         FromName = name1;

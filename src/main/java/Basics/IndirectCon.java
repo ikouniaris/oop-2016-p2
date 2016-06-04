@@ -14,16 +14,16 @@ import java.util.LinkedList;
  */
 public class IndirectCon {
 
-    private ArrayList<Links> xoxo;
+    private ArrayList<Links> ListOfLinks;
     private LinkedList<Node> encounteredList = new LinkedList<Node>();
-private static ArrayList<LinkedList> ListOfOmens = new ArrayList<LinkedList>();
+    private static ArrayList<LinkedList> ListOfLists = new ArrayList<LinkedList>();
     private static boolean check = false;
 
     private static int counter;
 
-    public IndirectCon(ArrayList<Links> xoxo) {
+    public IndirectCon(ArrayList<Links> ListOfLinks) {
 
-        this.xoxo = xoxo;
+        this.ListOfLinks = ListOfLinks;
     }
 
     //Finding the shortest routing path between 2 nodes
@@ -52,7 +52,7 @@ private static ArrayList<LinkedList> ListOfOmens = new ArrayList<LinkedList>();
                 Node tempNode = new Node(path.get(i));
                 tempNode.setCheck(true);
                 tempnodeList.add(tempNode);
-                ListOfOmens.add(tempnodeList);
+                ListOfLists.add(tempnodeList);
                 check = true;
                 counter = tempnodeList.size();
                 continue;
@@ -100,7 +100,7 @@ private static ArrayList<LinkedList> ListOfOmens = new ArrayList<LinkedList>();
 
     public ArrayList getLinkByID(int id) {
         ArrayList<Integer> toList = new ArrayList<Integer>();
-        for (Links templink : xoxo) {
+        for (Links templink : ListOfLinks) {
             if (templink.getFromID() == id) {
                 toList.add(templink.getToID());
             }

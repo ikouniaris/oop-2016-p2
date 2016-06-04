@@ -60,7 +60,13 @@ public class JsonCityReader {
 
             //Getting city information.
             String tempID = (String) jObject.get("id");
-            String tempScore = (String) jObject.get("score");
+            String tempScore;
+            if (jObject.get("score") != null) {
+                tempScore = jObject.get("score").toString();
+            } else {
+                tempScore = "";
+            }
+
             String tempDistance = (String) jObject.get("distance");
             String Coordinates = jObject.get("coordinate").toString();
 

@@ -95,4 +95,12 @@ public class Cities {
         return distance;
     }
 
+    public static ArrayList<String> getCitiesNames() {
+        ArrayList<String> namesList = new ArrayList<String>();
+        for (Cities city : citiesList) {
+            namesList.add(city.getName());
+        }
+        return namesList;
+    }
+
 }

@@ -18,8 +18,6 @@ public class Node {
         this.id = id;
     }
 
-    //see getnext get precious
-    //constructor that sets previous node
     void setID(int id) {
         this.id = id;
     }
