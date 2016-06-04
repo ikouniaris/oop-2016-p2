@@ -207,7 +207,6 @@ public class Database {
             while (rs.next()) {
 
                 String id = rs.getString("id");
-                System.out.print(id);
                 String name = rs.getString("name");
                 String score = rs.getString("score");
                 Coordinates coordinate = new Coordinates(rs.getString("coordinatetype"), rs.getString("coordinatex"), rs.getString("coordinatey"));
