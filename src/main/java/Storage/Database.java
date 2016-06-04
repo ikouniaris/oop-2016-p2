@@ -18,9 +18,6 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.SQLException;
 import Basics.Cities;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import Storage.DBHasDataException;
 
 public class Database {
 
@@ -29,7 +26,7 @@ public class Database {
     //Connecting to database
     public void Connect() {
 
-        System.out.println ("Oracle JDBC Connection Testing");
+        System.out.println("Oracle JDBC Connection Testing");
 
         try {
 
@@ -67,7 +64,7 @@ public class Database {
     }
 
     //Writing Cities to database
-    public void writeCitiesToDB(ArrayList<Cities> cities) throws DBHasDataException {
+    public void writeCitiesToDB(ArrayList<Cities> cities) {//throws DBHasDataException {
         Statement stmt = null;
 
         for (Cities city : cities) {
@@ -84,9 +81,9 @@ public class Database {
             try {
                 stmt = con.createStatement();
                 ResultSet rslt = stmt.executeQuery(query);
-                while (rslt.next()) {
-                    throw new DBHasDataException("Database contains data!");
-                }
+  //              while (rslt.next()) {
+    //                throw new DBHasDataException("Database contains data!");
+      //          }
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -97,6 +94,7 @@ public class Database {
             try {
                 stmt = con.createStatement();
                 stmt.executeUpdate(query);
+try { stmt.close(); } catch (Exception ignore) { }
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -112,7 +110,7 @@ public class Database {
     }
 
     //Writting links to database
-    public void writeLinksToDB(ArrayList<Links> links) throws DBHasDataException {
+    public void writeLinksToDB(ArrayList<Links> links) {//throws DBHasDataException {
         Statement stmt = null;
 
         for (Links link : links) {
@@ -125,10 +123,10 @@ public class Database {
             try {
                 stmt = con.createStatement();
                 ResultSet rslt = stmt.executeQuery(query);
-                while (rslt.next()) {
-                    throw new DBHasDataException("Database contains data!");
-                }
-
+               // while (rslt.next()) {
+               //     throw new DBHasDataException("Database contains data!");
+               // }
+try { stmt.close(); } catch (Exception ignore) { }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -137,7 +135,7 @@ public class Database {
             try {
                 stmt = con.createStatement();
                 stmt.execute(query);
-
+try { stmt.close(); } catch (Exception ignore) { }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -158,6 +156,7 @@ public class Database {
         try {
             stmt = con.createStatement();
             stmt.execute(query);
+            try { stmt.close(); } catch (Exception ignore) { }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -165,6 +164,7 @@ public class Database {
         try {
             stmt = con.createStatement();
             stmt.execute(query);
+            try { stmt.close(); } catch (Exception ignore) { }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,6 +173,7 @@ public class Database {
         try {
             stmt = con.createStatement();
             stmt.execute(query);
+            try { stmt.close(); } catch (Exception ignore) { }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -182,6 +183,7 @@ public class Database {
         try {
             stmt = con.createStatement();
             stmt.execute(query);
+            try { stmt.close(); } catch (Exception ignore) { }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -192,6 +194,34 @@ public class Database {
             e.printStackTrace();
         }
 
+    }
+    
+    //Creating database
+    public void createDB(){
+        Statement stmt = null;
+        
+        String query = "create table Cities (id number(9),name varchar2(30),score varchar2(20), coordinatetype varchar2(20), coordinatex number(9,6), coordinatey number(9,6),distance varchar2(10))";
+        try {
+            stmt = con.createStatement();
+            stmt.execute(query);
+            try { stmt.close(); } catch (Exception ignore) { }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
+        
+         query = "Create table Links (fromId number(9), fromName varchar2(30), toId number(9), toName varchar2(30))";
+
+        try {
+            stmt = con.createStatement();
+            stmt.execute(query);
+            try { stmt.close(); } catch (Exception ignore) { }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        
     }
 
     //Loading cities from database

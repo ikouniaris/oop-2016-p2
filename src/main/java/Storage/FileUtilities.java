@@ -22,10 +22,7 @@ import Basics.Coordinates;
 
 public class FileUtilities {
 
-   
-    
 //Blank constructor
-
     public FileUtilities() {
 
     }
@@ -33,8 +30,6 @@ public class FileUtilities {
 
     public void SaveLinks(String FileName, ArrayList<Links> Connections, boolean mode) throws FileNotFoundException, IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(FileName, mode));
-
-
 
         for (Links link : Connections) {
 
@@ -47,8 +42,6 @@ public class FileUtilities {
     //Saving cities to file
     public void SaveCities(String FileName, ArrayList<Cities> Cities, boolean mode) throws FileNotFoundException, IOException {
         PrintWriter pw = new PrintWriter(new FileWriter(FileName, mode));
-
-        
 
         for (Cities City : Cities) {
 
