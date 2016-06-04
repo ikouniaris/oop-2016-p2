@@ -44,17 +44,20 @@ public class Main {
        Links link=new Links();
        
        //Loading information from files
-       fl.LoadCities("Cities.txt");
+       //fl.LoadCities("Cities.txt");
          fl.LoadLinks("Links.txt");
          
          //Saving information to files
          fl.SaveCities("Cities.txt", city.getCityList(), true);
        fl.SaveLinks("Links.txt", link.returnLinks(), true);
-     
-       //Database managment
+     */
+       Cities city=new Cities();
+       Links link=new Links();
+
+        //Database managment
         Database dtbs=new Database();
         dtbs.Connect();
-      
+      /*
         //Writting data to database
         try {      
         dtbs.writeCitiesToDB(city.getCityList());
@@ -64,14 +67,13 @@ public class Main {
             dtbs.resetDatabase();
             e.printStackTrace();
         } 
-     
+     */
         //Reads data from databases.
         dtbs.readCitiesFromDB();
         dtbs.readLinksFromDB();
         
         //Closes the connection
-        dtbs.closeConnection();*/
-        
+        dtbs.closeConnection();      
         JWindow j = new JWindow();
         j.test();
     }

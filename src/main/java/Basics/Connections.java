@@ -48,7 +48,7 @@ public class Connections {
         //}
         System.out.println("100% complete. \nData downloading complete.\n ");
         Links testlink = new Links();
-        ArrayList testlist = testlink.returnLinks();
+        ArrayList testlist = testlink.getLinks();
 
     }
 

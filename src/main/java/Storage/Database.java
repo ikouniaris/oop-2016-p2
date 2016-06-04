@@ -262,7 +262,7 @@ public class Database {
             }
         }
         Links link = new Links();
-        return link.returnLinks();
+        return link.getLinks();
     }
 
     //Closing connection to database

@@ -28,15 +28,23 @@ public class Links {
 
     public Links() {
     }
-
-    ;
     
     public void Addlink(Links link) {
         Links.add(link);
     }
 
-    public ArrayList returnLinks() {
+    public ArrayList getLinks() {
         return Links;
+    }
+    
+    public boolean dlinked(String from, String to){
+        for(int i=0;i<Links.size();i++){
+            
+            if(from.equals(Links.get(i).getFromName()) && to.equals(Links.get(i).getToName())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getFromName() {
