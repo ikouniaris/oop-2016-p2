@@ -85,6 +85,7 @@ public class IndirectCon {
             return null;
 
         }
+        
         return tempnodeList;
 
     }
@@ -119,6 +120,6 @@ public class IndirectCon {
     
     
         //Place this line appropriately so that tempnodelist contains the full path from start node to finish
-                Links newLink=new Links(fromID,toID,tempnodeList);
+              //  Links newLink=new Links(fromID,toID,tempnodeList);
     
 }

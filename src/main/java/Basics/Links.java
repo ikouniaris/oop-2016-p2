@@ -12,6 +12,7 @@ import java.util.LinkedList;
  *
  * @author Cryowynd
  */
+import java.util.Collections;
 public class Links {
 
     private String FromName, ToName;
@@ -41,7 +42,15 @@ public class Links {
     public Links() {
     }
 
-    ;
+    public boolean dlinked(String from, String to){
+        for(int i=0;i<Links.size();i++){
+            
+            if(from.equals(Links.get(i).getFromName()) && to.equals(Links.get(i).getToName())){
+                return true;
+            }
+        }
+        return false;
+    }
     
     public void Addlink(Links link) {
         Links.add(link);
@@ -85,4 +94,9 @@ public class Links {
         return Links.size();
     }
 
+    
+    public void sortLinks(){
+        Collections.sort(Links, new LinksCompareTo());
+        Collections.sort(Links, new LinksCompareFrom());
+    }
 }

@@ -6,6 +6,7 @@
 package Basics;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -112,5 +113,12 @@ public class Cities {
             }
         }
         return tempName;
+    }    
+    
+    public void sortCities(){
+        Collections.sort(citiesList, new CitiesCompare());
+        Collections.sort(citiesList, new CitiesCompare());
     }
+    
+    
 }

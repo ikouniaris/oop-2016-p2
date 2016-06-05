@@ -39,45 +39,42 @@ public class Main {
         //Connections cncts = new Connections(city.getCitiesNames());
         //cncts.loadStationsInfo();
 
-        FileUtilities fl = new FileUtilities();
+       // FileUtilities fl = new FileUtilities();
 
         Links link = new Links();
 
         //Loading information from files
-        fl.LoadCities("Cities.txt");
-        fl.LoadLinks("Links.txt");
+     //   fl.LoadCities("Cities.txt");
+       // fl.LoadLinks("Links.txt");
         //Saving information to files
         //  fl.SaveCities("Cities.txt", city.getCityList(), false);
         //fl.SaveLinks("Links.txt", link.returnLinks(), false);
-/*
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.println(sdf.format(cal.getTime()));
-         */
+
         //Database managment
         Database dtbs = new Database();
         dtbs.Connect();
 
         //Writting data to database
-        try {
+     //   try {
             //     dtbs.createDB();
             //  dtbs.resetDatabase();
             //    dtbs.writeCitiesToDB(city.getCityList());
-            dtbs.writeLinksToDB(link.returnLinks());
-        } catch (DBHasDataException e) {
+       //     dtbs.writeLinksToDB(link.returnLinks());
+       // } catch (DBHasDataException e) {
             //if database has data, resets it
             //     dtbs.resetDatabase();
-            e.printStackTrace();
-        }
+          //  e.printStackTrace();
+        //}
 
         //Reads data from databases.
-        //     dtbs.readCitiesFromDB();
-        //   dtbs.readLinksFromDB();
+             dtbs.readCitiesFromDB();
+           dtbs.readLinksFromDB();
         //Closes the connection
         dtbs.closeConnection();
-
-        //      JWindow j = new JWindow();
-        //    j.test();
+        city.sortCities();
+        link.sortLinks();
+             JWindow j = new JWindow();
+            j.test();
     }
 
 }
