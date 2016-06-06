@@ -51,8 +51,8 @@ public class Main {
         //fl.SaveLinks("Links.txt", link.returnLinks(), false);
 
         //Database managment
-        Database dtbs = new Database();
-        dtbs.Connect();
+       // Database dtbs = new Database();
+      //  dtbs.Connect();
 
         //Writting data to database
      //   try {
@@ -67,12 +67,12 @@ public class Main {
         //}
 
         //Reads data from databases.
-             dtbs.readCitiesFromDB();
-           dtbs.readLinksFromDB();
+        //     dtbs.readCitiesFromDB();
+          // dtbs.readLinksFromDB();
         //Closes the connection
-        dtbs.closeConnection();
-        city.sortCities();
-        link.sortLinks();
+        //dtbs.closeConnection();
+       // city.sortCities();
+       // link.sortLinks();
              JWindow j = new JWindow();
             j.test();
     }

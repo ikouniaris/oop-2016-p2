@@ -42,7 +42,7 @@ public class IndirectCon {
         tempnodeList.add(firstNode);
 
         for (int i = 0; i < path.size(); i++) {
-            System.out.println(i);
+            //System.out.println(i);
             if (path.isEmpty()) {
                 continue;
             }
@@ -85,7 +85,7 @@ public class IndirectCon {
             return null;
 
         }
-        
+        Links newLink=new Links(fromID,toID,tempnodeList);
         return tempnodeList;
 
     }

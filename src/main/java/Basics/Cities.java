@@ -115,6 +115,16 @@ public class Cities {
         return tempName;
     }    
     
+    public int getIdByName(String name){
+        int id=0;
+        for (Cities city:citiesList){
+            if (name==city.getName()){
+               id=city.getId();
+            }
+        }
+        return id;
+    }    
+    
     public void sortCities(){
         Collections.sort(citiesList, new CitiesCompare());
         Collections.sort(citiesList, new CitiesCompare());

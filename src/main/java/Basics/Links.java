@@ -42,14 +42,16 @@ public class Links {
     public Links() {
     }
 
-    public boolean dlinked(String from, String to){
+    public int dlinked(String from, String to){
         for(int i=0;i<Links.size();i++){
             
-            if(from.equals(Links.get(i).getFromName()) && to.equals(Links.get(i).getToName())){
-                return true;
+            if(from.equals(Links.get(i).getFromName()) && to.equals(Links.get(i).getToName())&&Links.get(i).IsDirect()){
+                return 0;
+            } else if (from.equals(Links.get(i).getFromName()) && to.equals(Links.get(i).getToName())) {
+                return 1;
             }
         }
-        return false;
+        return 2;
     }
     
     public void Addlink(Links link) {
