@@ -94,8 +94,6 @@ public class JWindow extends JFrame implements ActionListener {
                 okButton.setBounds(295, 100, 60, 30);
                 fileButton.setBounds(45, 100, 125, 30);
                 dbButton.setBounds(170, 100, 125, 30);
-//                dropmenu.setBounds(70, 100, 180, 30);
-//                dropmenu.setVisible(true);
                 okButton.setVisible(true);
                 fileButton.setVisible(true);
                 dbButton.setVisible(true);
@@ -166,6 +164,8 @@ public class JWindow extends JFrame implements ActionListener {
                     } else if (link.dlinked(value, value2)==1) {
                        textArea.setText(value + " and " + value2 + " connect indirectly.");
                     } else {
+                        textArea.setText("Looking for path, please wait.");
+                        textArea.setVisible(true);
                         Cities city=new Cities();
                         Links link=new Links();
                         new IndirectCon(link.returnLinks()).findIndLinks(city.getIdByName(value),city.getIdByName(value2),0);
@@ -177,22 +177,24 @@ public class JWindow extends JFrame implements ActionListener {
                     }
                 } else if (check == 2) {
                     if (use == 0) {
-                        
+                        textArea.setText("Loading, please wait.");
+                        textArea.setVisible(true);
                         Database dtbs = new Database();
                         dtbs.Connect();
                         dtbs.readCitiesFromDB();
                         dtbs.readLinksFromDB();
                         dtbs.closeConnection();
                         loadChoices();
-                        System.out.println("Loading finished.");
+                        textArea.setText("Loading finished.");
                     } else {
-                        
+                        textArea.setText("Loading, please wait.");
+                        textArea.setVisible(true);
                         FileUtilities fl = new FileUtilities();
                         try {
                             fl.LoadCities("Cities.txt");
                             fl.LoadLinks("Links.txt");
                             loadChoices();
-                            System.out.println("Loading finished.");
+                            textArea.setText("Loading finished.");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -209,7 +211,7 @@ public class JWindow extends JFrame implements ActionListener {
                            dtbs.writeCitiesToDB(city.getCityList());
                              dtbs.writeLinksToDB(link.returnLinks());
                              dtbs.closeConnection();
-                             System.out.println("Saving finished.");
+                             textArea.setText("Saving finished.");
                              } catch (DBHasDataException e) {
                                  e.printStackTrace();
                              }
@@ -221,7 +223,7 @@ public class JWindow extends JFrame implements ActionListener {
                         try {
                         fl.SaveCities("Cities.txt", city.getCityList(), false);
                         fl.SaveLinks("Links.txt", link.returnLinks(), false);
-                        System.out.println("Saving finished.");
+                        textArea.setText("Saving finished.");
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         } catch (IOException e){

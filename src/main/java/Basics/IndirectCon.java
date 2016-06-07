@@ -30,6 +30,8 @@ public class IndirectCon {
         
     }
     
+    
+    
     //Finding the shortest routing path between 2 nodes
     public LinkedList findIndLinks(int fromID, int toID, int dist) {
         LinkedList<Node> tempnodeList = new LinkedList<Node>();
@@ -85,7 +87,10 @@ public class IndirectCon {
             return null;
 
         }
+        if (dist==0){
         Links newLink=new Links(fromID,toID,tempnodeList);
+        encounteredList.clear();
+        }
         return tempnodeList;
 
     }
@@ -119,7 +124,6 @@ public class IndirectCon {
 
     
     
-        //Place this line appropriately so that tempnodelist contains the full path from start node to finish
-              //  Links newLink=new Links(fromID,toID,tempnodeList);
+
     
 }
