@@ -17,7 +17,6 @@ import Storage.FileUtilities;
 import java.io.IOException;
 import Storage.DBHasDataException;
 import java.io.FileNotFoundException;
-import Basics.IndirectCon;
 /**
  *
  * @author Ilianna
@@ -159,17 +158,18 @@ public class JWindow extends JFrame implements ActionListener {
                     value2 = dropmenu2.getSelectedItem().toString();
                     if (value == value2) {
                         textArea.setText("Both inputs are the same city!");
-                    } else if (link.dlinked(value, value2)==0) {
+                    } else if (link.dlinked(value, value2)) {
                         textArea.setText(value + " and " + value2 + " connect directly.");
-                    } else if (link.dlinked(value, value2)==1) {
+                    } else if (link.dlinked(value, value2)) {
                        textArea.setText(value + " and " + value2 + " connect indirectly.");
                     } else {
                         textArea.setText("Looking for path, please wait.");
                         textArea.setVisible(true);
                         Cities city=new Cities();
                         Links link=new Links();
-                        new IndirectCon(link.returnLinks()).findIndLinks(city.getIdByName(value),city.getIdByName(value2),0);
-                        if (link.dlinked(value, value2)==1) {
+                        link.findIndLinks(city.getIdByName(value), city.getIdByName(value2), 0);
+                     //   new Links(link.returnLinks()).findIndLinks(city.getIdByName(value),city.getIdByName(value2),0);
+                        if (link.dlinked(value, value2)) {
                        textArea.setText(value + " and " + value2 + " connect indirectly.");
                         } else {
                             textArea.setText("Unfortunately, "+ value + " and " + value2 + " don't connect.");
