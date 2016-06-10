@@ -17,6 +17,7 @@ import Storage.FileUtilities;
 import java.io.IOException;
 import Storage.DBHasDataException;
 import java.io.FileNotFoundException;
+
 /**
  *
  * @author Ilianna
@@ -26,15 +27,17 @@ public class JWindow extends JFrame implements ActionListener {
     private JFrame mainFrame;
     private Cities cities = new Cities();
     private JComboBox<String> dropmenu;
-    private JButton okButton, dbButton, fileButton;
+    private JButton okButton, dbButton, fileButton, saveButton, linkButton, loadButton, infoButton;
     private String value;
     private String value2;
     private JTextArea textArea;
     private JComboBox<String> dropmenu2;
-    private int check;
+    private int check = 2;
     private int use;
     private Links link = new Links();
     private String[] choices;
+    private boolean i = false, j = false;
+
     public void test() {
 
         mainFrame = new JFrame("TITLE");
@@ -55,8 +58,8 @@ public class JWindow extends JFrame implements ActionListener {
                 check = 0;
                 dropmenu2.setVisible(false);
                 textArea.setVisible(false);
-                okButton.setBounds(250, 100, 60, 30);
-                dropmenu.setBounds(70, 100, 180, 30);
+                okButton.setBounds(250, 50, 60, 30);
+                dropmenu.setBounds(70, 50, 180, 30);
                 dropmenu.setVisible(true);
                 okButton.setVisible(true);
                 fileButton.setVisible(false);
@@ -71,57 +74,81 @@ public class JWindow extends JFrame implements ActionListener {
             public void actionPerformed(ActionEvent ae) {
                 check = 1;
                 textArea.setVisible(false);
-                dropmenu.setBounds(45, 100, 125, 30);
+                dropmenu.setBounds(45, 50, 125, 30);
                 dropmenu.setVisible(true);
-                dropmenu2.setBounds(170, 100, 125, 30);
+                dropmenu2.setBounds(170, 50, 125, 30);
                 dropmenu2.setVisible(true);
-                okButton.setBounds(295, 100, 60, 30);
+                okButton.setBounds(295, 50, 60, 30);
                 okButton.setVisible(true);
                 fileButton.setVisible(false);
                 dbButton.setVisible(false);
             }
         });
 
-        JButton loadButton = new JButton("Load Data");
+        loadButton = new JButton("Load Data");
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                check = 2;
-                dropmenu.setVisible(false);
-                dropmenu2.setVisible(false);
-                textArea.setVisible(false);
-                okButton.setBounds(295, 100, 60, 30);
-                fileButton.setBounds(45, 100, 125, 30);
-                dbButton.setBounds(170, 100, 125, 30);
-                okButton.setVisible(true);
-                fileButton.setVisible(true);
-                dbButton.setVisible(true);
-            }
-        }
-        );
+                saveButton.setText("Save Data");
+                if (j) {
+                    j = false;
+                    loadButton.setText("Load Data");
+                    infoButton.setVisible(true);
+                    linkButton.setVisible(true);
+                    fileButton.setVisible(false);
+                    okButton.setVisible(false);
+                    dbButton.setVisible(false);
 
-        JButton saveButton = new JButton("Save Data");
+                } else {
+                    check = 2;
+                    j = true;
+                    okButton.setVisible(false);
+                    dropmenu.setVisible(false);
+                    infoButton.setVisible(false);
+                    linkButton.setVisible(false);
+                    dropmenu2.setVisible(false);
+                    textArea.setVisible(false);
+                    dbButton.setBounds(80, 90, 110, 30);
+                    fileButton.setBounds(190, 90, 110, 30);
+                    fileButton.setVisible(true);
+                    dbButton.setVisible(true);
+                    loadButton.setText("Back");
+                }
+            }
+        });
+
+        saveButton = new JButton("Save Data");
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                check = 3;
-                dropmenu.setVisible(false);
-                dropmenu2.setVisible(false);
-                textArea.setVisible(false);
-                okButton.setBounds(295, 100, 60, 30);
-                fileButton.setBounds(45, 100, 125, 30);
-                dbButton.setBounds(170, 100, 125, 30);
-                okButton.setVisible(true);
-                fileButton.setVisible(true);
-                dbButton.setVisible(true);
+                loadButton.setText("Load Data");
+                if (i) {
+                    i = false;
+                    saveButton.setText("Save Data");
+                    infoButton.setVisible(true);
+                    linkButton.setVisible(true);
+                    fileButton.setVisible(false);
+                    okButton.setVisible(false);
+                    dbButton.setVisible(false);
+
+                } else {
+                    check = 3;
+                    i = true;
+                    okButton.setVisible(false);
+                    dropmenu.setVisible(false);
+                    infoButton.setVisible(false);
+                    linkButton.setVisible(false);
+                    dropmenu2.setVisible(false);
+                    textArea.setVisible(false);
+                    dbButton.setBounds(80, 90, 110, 30);
+                    fileButton.setBounds(190, 90, 110, 30);
+                    fileButton.setVisible(true);
+                    dbButton.setVisible(true);
+                    saveButton.setText("Back");
+                }
             }
         }
         );
-
-        infoButton.setBounds(80, 10, 110, 30);
-        linkButton.setBounds(190, 10, 110, 30);
-        saveButton.setBounds(80, 60, 110, 30);
-        loadButton.setBounds(190, 60, 110, 30);
 
         loadChoices();
 
@@ -130,6 +157,8 @@ public class JWindow extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 use = 0;
+                okButton.setVisible(true);
+                okButton.setBounds(160, 120, 60, 30);
             }
 
         });
@@ -139,6 +168,8 @@ public class JWindow extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 use = 1;
+                okButton.setVisible(true);
+                okButton.setBounds(160, 120, 60, 30);
             }
 
         });
@@ -147,11 +178,13 @@ public class JWindow extends JFrame implements ActionListener {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+
                 if (check == 0) {
                     value = dropmenu.getSelectedItem().toString();
                     cities = cities.getCity(value);
                     Coordinates c = cities.getCoordinate();
+                    textArea.setBounds(10, 90, 360, 210);
+                    textArea.setVisible(true);
                     textArea.setText("Name: " + value + "\n\nID: " + cities.getId() + "\n\nCoordinates:\ntype: " + c.getType() + "\nx: " + c.getX() + "\ny: " + c.getY() + "\n\nScore: " + cities.getScore() + "\n\nDistance: " + cities.getDistance());
                 } else if (check == 1) {
                     value = dropmenu.getSelectedItem().toString();
@@ -161,88 +194,108 @@ public class JWindow extends JFrame implements ActionListener {
                     } else if (link.dlinked(value, value2)) {
                         textArea.setText(value + " and " + value2 + " connect directly.");
                     } else if (link.dlinked(value, value2)) {
-                       textArea.setText(value + " and " + value2 + " connect indirectly.");
+                        textArea.setText(value + " and " + value2 + " connect indirectly.");
                     } else {
                         textArea.setText("Looking for path, please wait.");
                         textArea.setVisible(true);
-                        Cities city=new Cities();
-                        Links link=new Links();
+                        Cities city = new Cities();
+                        Links link = new Links();
                         link.findIndLinks(city.getIdByName(value), city.getIdByName(value2), 0);
-                     //   new Links(link.returnLinks()).findIndLinks(city.getIdByName(value),city.getIdByName(value2),0);
                         if (link.dlinked(value, value2)) {
-                       textArea.setText(value + " and " + value2 + " connect indirectly.");
+                            textArea.setText(value + " and " + value2 + " connect indirectly.");
                         } else {
-                            textArea.setText("Unfortunately, "+ value + " and " + value2 + " don't connect.");
+                            textArea.setText("Unfortunately, " + value + " and " + value2 + " don't connect.");
                         }
                     }
+                    textArea.setBounds(10, 90, 360, 210);
+                    textArea.setVisible(true);
                 } else if (check == 2) {
                     if (use == 0) {
-                        textArea.setText("Loading, please wait.");
-                        textArea.setVisible(true);
                         Database dtbs = new Database();
                         dtbs.Connect();
                         dtbs.readCitiesFromDB();
                         dtbs.readLinksFromDB();
                         dtbs.closeConnection();
                         loadChoices();
-                        textArea.setText("Loading finished.");
                     } else {
-                        textArea.setText("Loading, please wait.");
-                        textArea.setVisible(true);
                         FileUtilities fl = new FileUtilities();
                         try {
                             fl.LoadCities("Cities.txt");
                             fl.LoadLinks("Links.txt");
                             loadChoices();
-                            textArea.setText("Loading finished.");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
+                    if (!j && !i) {
+                        fileButton.setVisible(false);
+                        dbButton.setVisible(false);
+                        okButton.setVisible(false);
+                        infoButton.setVisible(true);
+                        linkButton.setVisible(true);
+                        infoButton.setBounds(80, 10, 110, 30);
+                        linkButton.setBounds(190, 10, 110, 30);
+                        textArea.setVisible(false);
 
+                        saveButton.setVisible(true);
+                        saveButton.setBounds(10, 320, 110, 30);
+                        loadButton.setVisible(true);
+                        loadButton.setBounds(260, 320, 110, 30);
+                    }
+
+                } else if (use == 0) {
+
+                    Cities city = new Cities();
+                    Links link = new Links();
+                    Database dtbs = new Database();
+                    dtbs.Connect();
+                    try {
+                        dtbs.writeCitiesToDB(city.getCityList());
+                        dtbs.writeLinksToDB(link.returnLinks());
+                        dtbs.closeConnection();
+                        textArea.setText("Saving finished.");
+                    } catch (DBHasDataException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    if (use==0){
-                        
-                        Cities city=new Cities();
-                        Links link=new Links();
-                        Database dtbs = new Database();
-                        dtbs.Connect();
-                        try {
-                           dtbs.writeCitiesToDB(city.getCityList());
-                             dtbs.writeLinksToDB(link.returnLinks());
-                             dtbs.closeConnection();
-                             textArea.setText("Saving finished.");
-                             } catch (DBHasDataException e) {
-                                 e.printStackTrace();
-                             }
-                    } else {
-                        
-                        Cities city=new Cities();
-                        Links link=new Links();
-                        FileUtilities fl = new FileUtilities();
-                        try {
+
+                    Cities city = new Cities();
+                    Links link = new Links();
+                    FileUtilities fl = new FileUtilities();
+                    try {
                         fl.SaveCities("Cities.txt", city.getCityList(), false);
                         fl.SaveLinks("Links.txt", link.returnLinks(), false);
                         textArea.setText("Saving finished.");
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e){
-                            e.printStackTrace();
-                        }
-                      
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
 
                 }
-                textArea.setVisible(true);
             }
         });
-        okButton.setVisible(false);
 
         textArea = new JTextArea();
-        textArea.setBounds(10, 140, 360, 210);
         textArea.setEditable(false);
-        textArea.setVisible(false);
 
+        textArea.setVisible(true);
+        textArea.setBounds(80, 50, 220, 30);
+        textArea.setText("Choose where to load information from:");
+        dbButton.setBounds(80, 90, 110, 30);
+        dbButton.setVisible(true);
+        fileButton.setBounds(190, 90, 110, 30);
+        fileButton.setVisible(true);
+        saveButton.setVisible(false);
+        loadButton.setVisible(false);
+        infoButton.setVisible(false);
+        linkButton.setVisible(false);
+
+        /*
+        saveButton.setBounds(80, 60, 110, 30);
+        loadButton.setBounds(190, 60, 110, 30);
+        
+         */
         mainFrame.add(infoButton);
         mainFrame.add(linkButton);
         mainFrame.add(saveButton);
@@ -261,9 +314,9 @@ public class JWindow extends JFrame implements ActionListener {
 
         System.out.println("clicked");
     }
-    
-    public void loadChoices(){
-         choices = new String[cities.getCityList().size()];
+
+    public void loadChoices() {
+        choices = new String[cities.getCityList().size()];
         for (int i = 0; i < cities.getCityList().size(); i++) {
             choices[i] = cities.getCity(i).getName();
         }

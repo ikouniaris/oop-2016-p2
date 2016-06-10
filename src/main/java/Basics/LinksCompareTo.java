@@ -10,10 +10,11 @@ package Basics;
  * @author Cryowynd
  */
 import java.util.Comparator;
-public class LinksCompareTo implements Comparator<Links>{
+
+public class LinksCompareTo implements Comparator<Links> {
+
     @Override
     public int compare(Links l1, Links l2) {
         return l1.getToName().compareTo(l2.getToName());
     }
 }
-

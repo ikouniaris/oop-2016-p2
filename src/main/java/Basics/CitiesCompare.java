@@ -10,7 +10,9 @@ package Basics;
  * @author Cryowynd
  */
 import java.util.Comparator;
-public class CitiesCompare implements Comparator<Cities>{
+
+public class CitiesCompare implements Comparator<Cities> {
+
     @Override
     public int compare(Cities c1, Cities c2) {
         return c1.getName().compareTo(c2.getName());

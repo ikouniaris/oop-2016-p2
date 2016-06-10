@@ -29,7 +29,6 @@ public class LoadStationThread extends Thread {
     boolean flag;
     static volatile boolean rateReached = false;
 
-  
     public LoadStationThread(int c1) {
         this.c1 = c1;
     }
@@ -37,9 +36,7 @@ public class LoadStationThread extends Thread {
     public LoadStationThread() {
     }
 
-    
-    
-  public void run() {
+    public void run() {
 
         System.out.println("Retrieving Station information");
 
@@ -51,7 +48,6 @@ public class LoadStationThread extends Thread {
                 c2--;
             }
         }
-             
 
         System.out.println("Thread number " + c1 + " finished");
 
@@ -102,7 +98,7 @@ public class LoadStationThread extends Thread {
             //}
         }
         if (!flag) {
-            
+
             counter = 0;
             flag = true;
         }
