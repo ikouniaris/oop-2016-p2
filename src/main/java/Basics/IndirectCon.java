@@ -12,13 +12,15 @@ import java.util.LinkedList;
  *
  * @author Cryowynd
  */
+
+
 public class IndirectCon {
 
     private ArrayList<Links> ListOfLinks;
     private LinkedList<Node> encounteredList = new LinkedList<Node>();
     private static ArrayList<LinkedList> ListOfLists = new ArrayList<LinkedList>();
     private static boolean check = false;
-
+    private boolean xxx;
     private static int counter;
     
     public IndirectCon(ArrayList<Links> ListOfLinks) {

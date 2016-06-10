@@ -9,6 +9,7 @@ package Basics;
  *
  * @author Cryowynd
  */
+//might delete it
 import java.util.Comparator;
 public class LinksCompareTo implements Comparator<Links>{
     @Override

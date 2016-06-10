@@ -29,12 +29,16 @@ public class JWindow extends JFrame implements ActionListener {
     private JComboBox<String> dropmenu2;
     private boolean check;
     private Links link = new Links();
-
+    private JButton backButton = new JButton("Back");
+    private JButton dbButton = new JButton("<html>Database<br />(Default)</html>)");
+    private JButton fButton = new JButton("File");
+    private JButton linkButton = new JButton("Link Search");
+    private JButton infoButton = new JButton("City Search");  
+    private JButton qB = new JButton("Load From...");
+    
     public void test() {
 
-        mainFrame = new JFrame("TITLE");
-
-        mainFrame = new JFrame("Java Swing Examples");
+        mainFrame = new JFrame("S-Cities");
         mainFrame.setSize(400, 400);
         mainFrame.setLayout(null);
         mainFrame.addWindowListener(new WindowAdapter() {
@@ -43,32 +47,33 @@ public class JWindow extends JFrame implements ActionListener {
             }
         });
 
-        JButton infoButton = new JButton("City Search");
+        
+        
+        
         infoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 check = true;
                 dropmenu2.setVisible(false);
                 textArea.setVisible(false);
-                okButton.setBounds(250, 100, 60, 30);
-                dropmenu.setBounds(70, 100, 180, 30);
+                okButton.setBounds(250, 50, 60, 30);
+                dropmenu.setBounds(70, 50, 180, 30);
                 dropmenu.setVisible(true);
                 okButton.setVisible(true);  
             }
         }
         );
         
-        JButton linkButton = new JButton("Link Search");
         linkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 check = false;
                 textArea.setVisible(false);
-                dropmenu.setBounds(45, 100, 125, 30);
+                dropmenu.setBounds(45, 50, 125, 30);
                 dropmenu.setVisible(true);
-                dropmenu2.setBounds(170, 100, 125, 30);
+                dropmenu2.setBounds(170, 50, 125, 30);
                 dropmenu2.setVisible(true);
-                okButton.setBounds(295, 100, 60, 30);
+                okButton.setBounds(295, 50, 60, 30);
                 okButton.setVisible(true);
             }
         });
@@ -84,8 +89,6 @@ public class JWindow extends JFrame implements ActionListener {
         
         dropmenu = new JComboBox<String>(choices);
         dropmenu2 = new JComboBox<String>(choices);
-        dropmenu.setVisible(false);
-        dropmenu2.setVisible(false);
         
         okButton = new JButton("OK");
         okButton.addActionListener(new ActionListener() {
@@ -109,10 +112,49 @@ public class JWindow extends JFrame implements ActionListener {
                 textArea.setVisible(true);
             }
         });
-        okButton.setVisible(false);
+        
+        qB.setBounds(250, 315, 120, 30);
+        qB.setVisible(true);
+        qB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                okButton.setVisible(false);
+                infoButton.setVisible(false);
+                linkButton.setVisible(false);
+                dropmenu.setVisible(false);
+                dropmenu2.setVisible(false);
+                qB.setVisible(false);
+                
+                textArea.setVisible(true);
+                textArea.setBounds(80, 50, 220, 30);
+                textArea.setText("Choose where to load information from:");
+                backButton.setBounds(290, 315, 80, 30);
+                backButton.setVisible(true);
+                dbButton.setBounds(120, 90, 80, 50);
+                dbButton.setVisible(true);
+                fButton.setBounds(200, 90, 80, 50);
+                fButton.setVisible(true);
+            }
+        });
+        
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                backButton.setVisible(false);
+                dbButton.setVisible(false);
+                fButton.setVisible(false);
+                textArea.setVisible(false);
+                textArea.setBounds(10, 90, 360, 210);
+                infoButton.setVisible(true);
+                linkButton.setVisible(true);
+                qB.setVisible(true);
+            }
+        });
+        
+        
         
         textArea = new JTextArea();
-        textArea.setBounds(10, 140, 360, 210);
+        textArea.setBounds(10, 90, 360, 210);
         textArea.setEditable(false);
         textArea.setVisible(false);
         
@@ -123,6 +165,10 @@ public class JWindow extends JFrame implements ActionListener {
         mainFrame.add(dropmenu);
         mainFrame.add(textArea);
         mainFrame.add(dropmenu2);
+        mainFrame.add(qB);
+        mainFrame.add(backButton);
+        mainFrame.add(dbButton);
+        mainFrame.add(fButton);
 
         mainFrame.setVisible(true);
 
