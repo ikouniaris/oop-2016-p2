@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Gui;
-
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -17,13 +16,13 @@ import Storage.FileUtilities;
 import java.io.IOException;
 import Storage.DBHasDataException;
 import java.io.FileNotFoundException;
-
+import java.util.LinkedList;
+import Basics.Node;
 /**
  *
  * @author Ilianna
  */
 public class JWindow extends JFrame implements ActionListener {
-
     private JFrame mainFrame;
     private Cities cities = new Cities();
     private JComboBox<String> dropmenu;
@@ -37,11 +36,9 @@ public class JWindow extends JFrame implements ActionListener {
     private Links link = new Links();
     private String[] choices;
     private boolean i = false, j = false;
-
+    private LinkedList<Node> path;
     public void test() {
-
         mainFrame = new JFrame("TITLE");
-
         mainFrame = new JFrame("Java Swing Examples");
         mainFrame.setSize(400, 400);
         mainFrame.setLayout(null);
@@ -50,7 +47,6 @@ public class JWindow extends JFrame implements ActionListener {
                 System.exit(0);
             }
         });
-
         JButton infoButton = new JButton("City Search");
         infoButton.addActionListener(new ActionListener() {
             @Override
@@ -67,7 +63,6 @@ public class JWindow extends JFrame implements ActionListener {
             }
         }
         );
-
         JButton linkButton = new JButton("Link Search");
         linkButton.addActionListener(new ActionListener() {
             @Override
@@ -84,7 +79,6 @@ public class JWindow extends JFrame implements ActionListener {
                 dbButton.setVisible(false);
             }
         });
-
         loadButton = new JButton("Load Data");
         loadButton.addActionListener(new ActionListener() {
             @Override
@@ -98,7 +92,6 @@ public class JWindow extends JFrame implements ActionListener {
                     fileButton.setVisible(false);
                     okButton.setVisible(false);
                     dbButton.setVisible(false);
-
                 } else {
                     check = 2;
                     j = true;
@@ -116,7 +109,6 @@ public class JWindow extends JFrame implements ActionListener {
                 }
             }
         });
-
         saveButton = new JButton("Save Data");
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -130,7 +122,6 @@ public class JWindow extends JFrame implements ActionListener {
                     fileButton.setVisible(false);
                     okButton.setVisible(false);
                     dbButton.setVisible(false);
-
                 } else {
                     check = 3;
                     i = true;
@@ -149,9 +140,7 @@ public class JWindow extends JFrame implements ActionListener {
             }
         }
         );
-
         loadChoices();
-
         dbButton = new JButton("Database");
         dbButton.addActionListener(new ActionListener() {
             @Override
@@ -160,9 +149,7 @@ public class JWindow extends JFrame implements ActionListener {
                 okButton.setVisible(true);
                 okButton.setBounds(160, 120, 60, 30);
             }
-
         });
-
         fileButton = new JButton("File");
         fileButton.addActionListener(new ActionListener() {
             @Override
@@ -171,14 +158,11 @@ public class JWindow extends JFrame implements ActionListener {
                 okButton.setVisible(true);
                 okButton.setBounds(160, 120, 60, 30);
             }
-
         });
-
         okButton = new JButton("OK");
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-
                 if (check == 0) {
                     value = dropmenu.getSelectedItem().toString();
                     cities = cities.getCity(value);
@@ -194,15 +178,28 @@ public class JWindow extends JFrame implements ActionListener {
                     } else if (link.dlinked(value, value2)) {
                         textArea.setText(value + " and " + value2 + " connect directly.");
                     } else if (link.dlinked(value, value2)) {
-                        textArea.setText(value + " and " + value2 + " connect indirectly.");
+                        String text = value + " and " + value2 + " connect indirectly.";
+                        textArea.setText(text);
+                        link=link.FindLink(value, value2);
+                        path = link.getFullPath();
+                        for(int z=0;z<path.size();z++){
+                            textArea.append(text+"\n"+path.get(z));
+                        }
                     } else {
+                        textArea.setBounds(10, 90, 360, 210);
                         textArea.setText("Looking for path, please wait.");
                         textArea.setVisible(true);
                         Cities city = new Cities();
                         Links link = new Links();
                         link.findIndLinks(city.getIdByName(value), city.getIdByName(value2), 0);
                         if (link.dlinked(value, value2)) {
-                            textArea.setText(value + " and " + value2 + " connect indirectly.");
+                            String text = value + " and " + value2 + " connect indirectly.";
+                            textArea.setText(text);
+                            link=link.FindLink(value, value2);
+                            path = link.getFullPath();
+                            for(int z=0;z<path.size();z++){
+                            textArea.append(text+"\n"+path.get(z));
+                        }
                         } else {
                             textArea.setText("Unfortunately, " + value + " and " + value2 + " don't connect.");
                         }
@@ -236,15 +233,12 @@ public class JWindow extends JFrame implements ActionListener {
                         infoButton.setBounds(80, 10, 110, 30);
                         linkButton.setBounds(190, 10, 110, 30);
                         textArea.setVisible(false);
-
                         saveButton.setVisible(true);
                         saveButton.setBounds(10, 320, 110, 30);
                         loadButton.setVisible(true);
                         loadButton.setBounds(260, 320, 110, 30);
                     }
-
                 } else if (use == 0) {
-
                     Cities city = new Cities();
                     Links link = new Links();
                     Database dtbs = new Database();
@@ -258,7 +252,6 @@ public class JWindow extends JFrame implements ActionListener {
                         e.printStackTrace();
                     }
                 } else {
-
                     Cities city = new Cities();
                     Links link = new Links();
                     FileUtilities fl = new FileUtilities();
@@ -271,14 +264,11 @@ public class JWindow extends JFrame implements ActionListener {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         });
-
         textArea = new JTextArea();
         textArea.setEditable(false);
-
         textArea.setVisible(true);
         textArea.setBounds(80, 50, 220, 30);
         textArea.setText("Choose where to load information from:");
@@ -290,7 +280,6 @@ public class JWindow extends JFrame implements ActionListener {
         loadButton.setVisible(false);
         infoButton.setVisible(false);
         linkButton.setVisible(false);
-
         /*
         saveButton.setBounds(80, 60, 110, 30);
         loadButton.setBounds(190, 60, 110, 30);
@@ -307,20 +296,15 @@ public class JWindow extends JFrame implements ActionListener {
         mainFrame.add(fileButton);
         mainFrame.add(dbButton);
         mainFrame.setVisible(true);
-
     }
-
     public void actionPerformed(ActionEvent e) {
-
         System.out.println("clicked");
     }
-
     public void loadChoices() {
         choices = new String[cities.getCityList().size()];
         for (int i = 0; i < cities.getCityList().size(); i++) {
             choices[i] = cities.getCity(i).getName();
         }
-
         dropmenu = new JComboBox<String>(choices);
         dropmenu2 = new JComboBox<String>(choices);
         mainFrame.add(dropmenu);

@@ -202,4 +202,15 @@ public class Links {
     public LinkedList getFullPath() {
         return fullPath;
     }
+    
+    public Links FindLink(String name1, String name2){
+        Links link=new Links();
+        for (Links templink:Links){
+            if ((templink.getFromName()==name1)&&(templink.getToName()==name2)){
+                link=templink;
+                break;
+               
+            }
+        }
+     return link;}
 }
